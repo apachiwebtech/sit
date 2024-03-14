@@ -50,31 +50,13 @@ const Header = () => {
           <span></span>
         </li>
 
-        <li className="nav-item">
-          <Link className="nav-link" to="/webapp/vendormaster">
-            <Icon path={mdiAccountGroupOutline} size={1} className='mx-3' />
-            <span className="menu-title">Vendor Master</span>
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to='/webapp/adminuser'>
-            <Icon path={mdiAccountOutline} size={1} className='mx-3' />
-            <span className="menu-title">Admin User</span>
-          </Link>
-        </li>
-
-
-        {/* <li className="nav-item">
-          <Link className="nav-link" to='' onClick={handleClick}>
-            <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
-            <span className="menu-title">Product </span>
-          </Link>
-        </li> */}
+   
+    
 
         <li className="nav-item" onClick={() => handleToggle('product')}>
           <div className="nav-link" >
             <Icon path={mdiFormatListBulletedSquare} size={1} className='mx-3' />
-            <span className="menu-title">Products</span>
+            <span className="menu-title">General Master</span>
             {openStates.product ? <ExpandLess className='mx-3' /> : <ExpandMore className='mx-3' />}
           </div>
         </li>
@@ -83,101 +65,80 @@ const Header = () => {
           <ul className='inner-item'>
 
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/group'>
+              <Link className="nav-link" to={`/onefieldform/${"awt_descipline"}/${"Descipline"}`}>
                 <Icon path={mdiLandPlotsCircle} size={1} className='mx-3' />
-                <span className="menu-title">Group</span>
+                <span className="menu-title">Discipline</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/category'>
+              <Link className="nav-link" to='/category'>
                 <Icon path={mdiLandPlotsCircle} size={1} className='mx-3' />
-                <span className="menu-title">Category</span>
+                <span className="menu-title">Bank</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/subcategory'>
+              <Link className="nav-link" to='/subcategory'>
                 <Icon path={mdiApps} size={1} className='mx-3' />
-                <span className="menu-title">SubCategory</span>
+                <span className="menu-title">Fees Notes</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/brand'>
+              <Link className="nav-link" to='/brand'>
                 {/* <Icon path={mdiMagnifyPlusOutline} size={1}  /> */}
                 <Icon path={mdiStarBox} size={1} className='mx-3' />
-                <span className="menu-title">Brand</span>
+                <span className="menu-title">Holiday</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/color'>
+              <Link className="nav-link" to='/color'>
                 {/* <Icon path={mdiMagnifyPlusOutline} size={1}  /> */}
                 <Icon path={mdiFormatColorFill} size={1} className='mx-3' />
-                <span className="menu-title">Color</span>
+                <span className="menu-title">Room</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/productcatalog'>
+              <Link className="nav-link" to='/productcatalog'>
                 <Icon path={mdiMap} size={1} className='mx-3' />
-                <span className="menu-title">Products</span>
+                <span className="menu-title">Location</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/productapproval'>
+              <Link className="nav-link" to='/productapproval'>
                 <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
-                <span className="menu-title">Product Approval</span>
-              </Link>
-            </li>
-            {/* <li className="nav-item">
-              <Link className="nav-link" to='/webapp/SellersProductInventory'>
-                <Icon path={mdiArchive} size={1} className='mx-3' />
-                <span className="menu-title">SellersProductInventory</span>
+                <span className="menu-title">Extension</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/shop'>
-                <Icon path={mdiStore} size={1} className='mx-3' />
-
-                <span className="menu-title">Shop</span>
+              <Link className="nav-link" to='/productapproval'>
+                <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
+                <span className="menu-title">Rack</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to='/webapp/productoption'>
+              <Link className="nav-link" to='/productapproval'>
                 <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
-                <span className="menu-title">Product Option</span>
+                <span className="menu-title">Material Category</span>
               </Link>
-            </li> */}
-            {/* <li className="nav-item">
-              <Link className="nav-link" to='/webapp/producttag'>
-                <Icon path={mdiTagTextOutline} size={1} className='mx-3' />
-               
-                <span className="menu-title">Product Tag</span>
-              </Link>
-            </li> */}
-            {/* <li className="nav-item">
-              <Link className="nav-link" to='/webapp/thresholdproduct'>
-           
-                <ProductionQuantityLimitsIcon className='mx-3' />
-                <span className="menu-title">Threshold Product</span>
-              </Link>
-            </li> */}
-            {/* <li className="nav-item">
-              <Link className="nav-link" to='/webapp/view'>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to='/productapproval'>
                 <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
-                <span className="menu-title">View</span>
+                <span className="menu-title">Vendor Type Master</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to='/productapproval'>
+                <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
+                <span className="menu-title">Vendor Master</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to='/productapproval'>
+                <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
+                <span className="menu-title">Material Price</span>
               </Link>
             </li>
         
-            <li className="nav-item">
-              <Link className="nav-link" to='/webapp/reviewcomment'>
-                <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
-                <span className="menu-title">Review & Comment</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to='/webapp/testimonial'>
-                <Icon path={mdiCheckDecagram} size={1} className='mx-3' />
-                <span className="menu-title">Testimonials</span>
-              </Link>
-            </li> */}
 
           </ul>
         </Collapse>
@@ -193,7 +154,7 @@ const Header = () => {
 
 
         <li className="nav-item" >
-          <Link className="nav-link" to='/webapp/orders'>
+          <Link className="nav-link" to='/orders'>
             <Icon path={mdiCartOutline} size={1} className='mx-3' />
             <span className="menu-title">Orders</span>
           </Link>

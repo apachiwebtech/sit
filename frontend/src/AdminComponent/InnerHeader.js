@@ -14,8 +14,8 @@ const InnerHeader = () => {
         switch (location.pathname) {
             case '/webapp':
                 return 'Dashboard';
-            case '/webapp/vendormaster':
-                return 'Vendor Master';
+            case '/onefieldform/awt_descipline/Descipline':
+                return 'Descipline';
             case '/webapp/adminuser':
                 return 'Admin Users';
             case '/webapp/productcatalog':
