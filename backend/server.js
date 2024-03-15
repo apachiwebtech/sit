@@ -300,3 +300,21 @@ app.post('/delete_data', (req, res) => {
   })
 
 })
+
+
+app.get('/get_datadata', (req, res) => {
+
+
+
+  const sql = `select * from awt_cart where deleted = 0 `
+
+  con.query(sql, (err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+
+})

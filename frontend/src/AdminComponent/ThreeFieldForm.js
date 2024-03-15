@@ -9,25 +9,33 @@ import decryptedUserId from '../Utils/UserID';
 import { DataGrid } from '@mui/x-data-grid';
 
 
-const OneFieldForm = () => {
+const ThreeFieldForm = () => {
 
-    const {tablename,fieldname} = useParams()
+    const { tablename, fieldname, text1, text2, text3, type } = useParams()
 
 
     const [brand, setBrand] = useState([])
+    const [vendor, setVendor] = useState([])
+    const [material, setMaterial] = useState([])
+
     const [uid, setUid] = useState([])
     const [cid, setCid] = useState("")
     const [error, setError] = useState({})
     const [confirmationVisibleMap, setConfirmationVisibleMap] = useState({});
 
     const [value, setValue] = useState({
-        title: "" || uid.title,
+        field1: "" || uid[text1],
+        field2: "" || uid[text2],
+        field3: "" || uid[text3],
 
     })
 
     useEffect(() => {
         setValue({
-            title: "" || uid.title,
+            field1: "" || uid[text1],
+            field2: "" || uid[text2],
+            field3: "" || uid[text3],
+
         })
     }, [uid])
 
@@ -37,9 +45,17 @@ const OneFieldForm = () => {
         const newErrors = {}
 
 
-        if (!value.title) {
+        if (!value.field1) {
             isValid = false;
-            newErrors.title = "Name is require"
+            newErrors.field1 = `${text1} is required`
+        }
+        if (!value.field2) {
+            isValid = false;
+            newErrors.field2 = `${text2} is required`
+        }
+        if (!value.field3) {
+            isValid = false;
+            newErrors.field3 = `${text3} is required`
         }
 
 
@@ -49,12 +65,13 @@ const OneFieldForm = () => {
 
     const handleUpdate = (id) => {
         const data = {
-            tablename : tablename,
-            u_id : id
+            tablename: tablename,
+            u_id: id
         }
         axios.post(`${BASE_URL}/update_data`, data)
             .then((res) => {
                 setUid(res.data[0])
+
             })
             .catch((err) => {
                 console.log(err)
@@ -63,9 +80,9 @@ const OneFieldForm = () => {
 
     async function getColorData() {
         const data = {
-            tablename : tablename
+            tablename: tablename
         }
-        axios.post(`${BASE_URL}/get_data`,data)
+        axios.post(`${BASE_URL}/get_data`, data)
             .then((res) => {
                 console.log(res.data)
                 setBrand(res.data)
@@ -75,9 +92,40 @@ const OneFieldForm = () => {
             })
     }
 
+    async function getvendordata() {
+        const data = {
+            tablename: "awt_vendor_master"
+        }
+        axios.post(`${BASE_URL}/get_data`, data)
+            .then((res) => {
+                console.log(res.data)
+                setVendor(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+    async function getmaterialcat() {
+        const data = {
+            tablename: "awt_material_cat"
+        }
+        axios.post(`${BASE_URL}/get_data`, data)
+            .then((res) => {
+                console.log(res.data)
+                setMaterial(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
     useEffect(() => {
+        getvendordata()
+        getmaterialcat()
         getColorData()
-        value.title = ""
+        value.field1 = ""
+        value.field2 = ""
+        value.field3 = ""
         setError({})
         setUid([])
     }, [tablename])
@@ -102,7 +150,7 @@ const OneFieldForm = () => {
     const handleDelete = (id) => {
         const data = {
             cat_id: id,
-            tablename : tablename
+            tablename: tablename
         }
 
         axios.post(`${BASE_URL}/delete_data`, data)
@@ -125,21 +173,28 @@ const OneFieldForm = () => {
 
         if (validateForm()) {
 
-            const data ={
-            title : value.title,
-            tablename : tablename,
-            user_id : decryptedUserId(),
-            uid : uid.id
+            const data = {
+                tablename: tablename,
+                user_id: decryptedUserId(),
+                uid: uid.id,
+                field1: value.field1,
+                field2: value.field2,
+                field3: value.field3,
+                field1_name: text1,
+                field2_name: text2,
+                field3_name: text3,
+
             }
 
 
-            axios.post(`${BASE_URL}/add_data`, data)
+            axios.post(`${BASE_URL}/add_data_three`, data)
                 .then((res) => {
                     alert(res.data)
                     getColorData()
                     setUid([])
                     setValue({
-                        title :""
+                        field1: "",
+                        field2: ""
                     })
 
                 })
@@ -153,12 +208,13 @@ const OneFieldForm = () => {
 
 
     const onhandleChange = (e) => {
+      
         setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
 
 
-    
+
     const columns = [
         {
             field: 'index',
@@ -169,7 +225,9 @@ const OneFieldForm = () => {
             flex: 1,
             filterable: false,
         },
-        { field: 'title', headerName: 'Title', flex: 2 },
+        { field: `${text1}`, headerName: `${text1}`, flex: 2 },
+        { field: `${text2}`, headerName: `${text2}`, flex: 2 },
+        { field: `${text3}`, headerName: `${text3}`, flex: 2 },
         {
             field: 'actions',
             type: 'actions',
@@ -178,8 +236,8 @@ const OneFieldForm = () => {
             renderCell: (params) => {
                 return (
                     <>
-                       <EditIcon style={{cursor : "pointer"}} onClick={() => handleUpdate(params.row.id)} />
-                       <DeleteIcon style={{ color: "red" ,cursor : "pointer"}} onClick={() => handleClick(params.row.id)} /> 
+                        <EditIcon style={{ cursor: "pointer" }} onClick={() => handleUpdate(params.row.id)} />
+                        <DeleteIcon style={{ color: "red", cursor: "pointer" }} onClick={() => handleClick(params.row.id)} />
                     </>
                 )
             }
@@ -202,13 +260,42 @@ const OneFieldForm = () => {
                                     <h4 class="card-title">Add {fieldname}</h4>
 
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
-                                        <div class="form-group">
-                                            <label for="exampleInputUsername1">{fieldname} <span className='text-danger'>*</span></label>
-                                            <input type="text" class="form-control" id="exampleInputUsername1" value={value.title} placeholder={`Enter ${fieldname} Name `} name='title' onChange={onhandleChange} />
-                                            {error.title && <span className='text-danger'>{error.title}</span>}
+                                        <div class="form-group ">
+                                            <label for="exampleFormControlSelect1">{text1}</label>
+                                            <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.field1} onChange={onhandleChange} name='field1'>
+                                                <option selected>Select {text1}</option>
+                                                {material.map((item)=>{
+                                                    return(
+                                                        <option key={item.id} value={item.id} >{item.Category}</option>
+                                                    )
+                                                })}
+                                            </select>
+                                            {error.field1 && <div className="text-danger">{error.field1}</div>}
                                         </div>
-                                   
+                                        <div class="form-group ">
+                                            <label for="exampleFormControlSelect1">{text2}</label>
+                                            <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.field2} onChange={onhandleChange} name='field2'>
+                                                <option selected>Select {text2}</option>
+
+                                                {vendor.map((item)=>{
+                                                    return(
+                                                        <option key={item.id} value={item.id}>{item.Category}</option>
+                                                    )
+                                                })}
+
+                                            </select>
+                                            {error.field2 && <div className="text-danger">{error.field2}</div>}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputUsername1">{text3}<span className='text-danger'>*</span></label>
+                                            <input type="text" class="form-control" id="exampleInputUsername1" value={value.field3} placeholder={`Enter ${text3} Name `} name='field3' onChange={onhandleChange} />
+                                            {error.field3 && <span className='text-danger'>{error.field3}</span>}
+                                        </div>
+
+
                                       
+
+
 
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                                         <button type='button' onClick={() => {
@@ -230,29 +317,29 @@ const OneFieldForm = () => {
                                         </div>
 
                                     </div>
-                                    
+
                                     <div>
-                                    <DataGrid
-                                            rows= {rowsWithIds}
+                                        <DataGrid
+                                            rows={rowsWithIds}
                                             columns={columns}
                                             getRowId={(row) => row.id}
                                             initialState={{
                                                 pagination: {
-                                                  paginationModel: { pageSize: 10, page: 0 },
+                                                    paginationModel: { pageSize: 10, page: 0 },
                                                 },
-                                              }}
+                                            }}
                                         />
 
                                         {confirmationVisibleMap[cid] && (
-                                                                <div className='confirm-delete'>
-                                                                    <p>Are you sure you want to delete?</p>
-                                                                    <button onClick={() => handleDelete(cid)} className='btn btn-sm btn-primary'>OK</button>
-                                                                    <button onClick={() => handleCancel(cid)} className='btn btn-sm btn-danger'>Cancel</button>
-                                                                </div>
-                                                            )}
+                                            <div className='confirm-delete'>
+                                                <p>Are you sure you want to delete?</p>
+                                                <button onClick={() => handleDelete(cid)} className='btn btn-sm btn-primary'>OK</button>
+                                                <button onClick={() => handleCancel(cid)} className='btn btn-sm btn-danger'>Cancel</button>
+                                            </div>
+                                        )}
                                     </div>
 
-                                  
+
 
                                 </div>
                             </div>
@@ -265,4 +352,4 @@ const OneFieldForm = () => {
     )
 }
 
-export default OneFieldForm
+export default ThreeFieldForm

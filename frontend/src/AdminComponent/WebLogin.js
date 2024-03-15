@@ -5,7 +5,7 @@ import { BASE_URL } from './BaseUrl'
 import md5 from 'js-md5'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
-import logo from '../assets/images/logo/ecomlogo.png'
+import logo from '../assets/frontimg/logo.jpg'
 import CryptoJS from 'crypto-js';
 
 const WebLogin = () => {
@@ -101,10 +101,10 @@ const WebLogin = () => {
             // localStorage.setItem("userid", res.data.id)
             const ciphertext = CryptoJS.AES.encrypt(res.data.id.toString(), encryptionKey).toString();
             Cookies.set('userid', ciphertext, { expires: 1 });
-            navigate('/webapp')
+            navigate('/')
           }
           else {
-            setErr('/weblog')
+            setErr(res.data)
           }
 
         })

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { mdiMenu } from '@mdi/js';
 import Icon from '@mdi/react';
-import logo from '../assets/images/logo/ecomlogo.png'
+import logo from '../assets/frontimg/logo.jpg'
 import InnerHeader from './InnerHeader';
 import Cookies from 'js-cookie';
 import axios from 'axios';
