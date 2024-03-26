@@ -133,6 +133,12 @@ const Header = () => {
                 <span className="menu-title">Vendor Type Master</span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/vendormaster">
+                <Icon path={mdiCircleMedium } size={1} className='mx-3' />
+                <span className="menu-title">Vendor Master</span>
+              </Link>
+            </li>
             {/* <li className="nav-item">
               <Link className="nav-link" to='/productapproval'>
                 <Icon path={mdiCircleMedium } size={1} className='mx-3' />
@@ -235,8 +241,37 @@ const Header = () => {
                 <span className="menu-title">Book Code</span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/course">
+                {/* <Icon path={mdiCircleMedium } size={1} className='mx-3' /> */}
+                <Icon path={mdiCircleMedium } size={1} className='mx-3' />
+                <span className="menu-title">Course</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/college">
+                {/* <Icon path={mdiCircleMedium } size={1} className='mx-3' /> */}
+                <Icon path={mdiCircleMedium } size={1} className='mx-3' />
+                <span className="menu-title">College</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/batchcategory">
+                {/* <Icon path={mdiCircleMedium } size={1} className='mx-3' /> */}
+                <Icon path={mdiCircleMedium } size={1} className='mx-3' />
+                <span className="menu-title">Batch Category</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/librarybook">
+                {/* <Icon path={mdiCircleMedium } size={1} className='mx-3' /> */}
+                <Icon path={mdiCircleMedium } size={1} className='mx-3' />
+                <span className="menu-title">Library Book</span>
+              </Link>
+            </li>
+            
             {/* <li className="nav-item">
-              <Link className="nav-link" to='/webapp/gallery'>
+              <Link className="nav-link" to='/webapp/gallery'
        
                 <Icon path={mdiCircleMedium } size={1} className='mx-3' />
                 <span className="menu-title">Library Book</span>

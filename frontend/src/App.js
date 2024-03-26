@@ -16,6 +16,15 @@ import './Responsive.css';
 import './Style.css';
 import TwoFieldForm from './AdminComponent/TwoFieldForm';
 import ThreeFieldForm from './AdminComponent/ThreeFieldForm';
+import VendorMaster from './AdminComponent/VenorMaster';
+import Course from './AdminComponent/Course';
+import BookCode from './AdminComponent/College';
+import College from './AdminComponent/College';
+import BatchCategory from './AdminComponent/BatchCategory';
+import Faculty from './AdminComponent/LibraryBook';
+import { LibraryBooks } from '@mui/icons-material';
+import LibraryBook from './AdminComponent/LibraryBook';
+
 
 
 
@@ -46,10 +55,27 @@ const Router = createBrowserRouter([
         path: '/threefieldform/:tablename/:text1/:text2/:text3/:type/:fieldname',
         element: <ThreeFieldForm />
       },
+      {
+        path: '/vendormaster',
+        element: <VendorMaster />
+      },
+      {
+        path: '/course',
+        element: <Course/>
+      },
+      {
+        path: '/college',
+        element: <College />
+      },
 
-
-  
-
+      {
+        path: '/batchcategory',
+        element: <BatchCategory/>
+      },
+      {
+        path: '/librarybook',
+        element: <LibraryBook/>
+      }
 
     ]
   }
@@ -61,6 +87,7 @@ function checkLocalStorageAndRedirect(navigate) {
     navigate('/weblog'); // Redirect to dashboard if id exists in localStorage
   }
 }
+
 
 
 
@@ -101,6 +128,7 @@ function WebApp() {
 
   );
 }
+
 
 
 export default Router;

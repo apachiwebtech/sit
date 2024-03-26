@@ -302,11 +302,11 @@ app.post('/delete_data', (req, res) => {
 })
 
 
-app.get('/get_datadata', (req, res) => {
+app.get('/vendor_details', (req, res) => {
 
 
 
-  const sql = `select * from awt_cart where deleted = 0 `
+  const sql = `select * from awt_vendor_master where deleted = 0 `
 
   con.query(sql, (err, data) => {
     if (err) {
@@ -317,4 +317,128 @@ app.get('/get_datadata', (req, res) => {
     }
   })
 
+})
+
+
+app.post('/add_vendor', (req, res) => {
+   
+  let {vendorname,email,telephone,type,address,country,state,city,pin,contactperson,mobile,fax,comments,uid} = req.body
+
+   let sql
+   let param;
+
+   if(uid == undefined){
+     sql = "insert into awt_vendor_master(`vendorname`,`email`,`telephone`,`type`,`address`,`country`,`state`,`city`,`pin`,`contactperson`,`mobile`,`fax`,`comment`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)"
+
+     param =[vendorname,email,telephone,type,address,country,state,city,pin,contactperson,mobile,fax,comments]
+
+   }else{
+    sql = "update awt_vendor_master set vendorname =? , email =? , telephone =? , type =? , address =? , country =? , state =? , city =? , pin =? , contactperson =? , mobile =? , fax =? , comments =? where id =?"
+
+    param =[vendorname,email,telephone,type,address,country,state,city,pin,contactperson,mobile,fax,comments,uid]
+
+   }
+
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+
+})
+
+
+app.post('/add_course', (req, res) => {
+  let {course,course_code,eligibility,introducation,specification,specification2,specification3,uid} = req.body
+
+  let sql
+  let param;
+
+  if(uid == undefined){
+    sql = "insert into awt_course(`course`,`course_code`,`eligibility`,`introducation`,`key_points`,`objective`,`basic_study`) values(?,?,?,?,?,?,?)"
+
+    param =[course,course_code,eligibility,introducation,specification,specification2,specification3]
+  }
+
+  else{
+    sql = "update awt_course set course =? , course_code =? , eligibility =? , introducation =? , key_points =? , objective =? , basic_study =? , where id =?"
+
+    param =[course,course_code,eligibility,introducation,specification,specification2,specification3]
+
+   }
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+
+})
+
+app.post('/batch_category', (req, res) => {
+   
+  let {batchcategory,batchtype,prefix,description,uid} = req.body
+
+   let sql
+   let param;
+
+   if(uid == undefined){
+     sql = "insert into awt_batch_category(`batchcategory`,`batchtype`,`prefix`,`description`) values(?,?,?,?)"
+
+     param =[batchcategory,batchtype,prefix,description]
+
+   }else{
+    sql = "update awt_batch_category set batchcategory =? , batchtype =? , prefix =? , description =? where id =?"
+
+    param =[batchcategory,batchtype,prefix,description,uid]
+
+   }
+
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+
+app.post('/add_college', (req, res) => {
+   
+  let {college,university,contactperson,designation,address,pin,country,state,telephone,mobile,email,website,remark,purpose,course,uid} = req.body
+
+   let sql
+   let param;
+
+   if(uid == undefined){
+     sql = "insert into awt_college(`college`,`university`,`contactperson`,`designation`,`address`,`pin`,`country`,`state`,`telephone`,`mobile`,`email`,`website`,`remark`,`purpose`,`course`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+
+     param =[college,university,contactperson,designation,address,pin,country,state,telephone,mobile,email,website,remark,purpose,course]
+
+   }else{
+    sql = "update awt_college set college =? , university =? , contactperson =? , designation =? , address =? , pin =? , country =? , country =? , state =? , telephone =? , mobile =? , email =? , website =? , remark =? , purpose =? , course =?  where id =?"
+
+    param =[college,university,contactperson,designation,address,pin,country,state,telephone,mobile,email,website,remark,purpose,course]
+
+   }
+
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
 })
