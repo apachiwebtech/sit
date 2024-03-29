@@ -22,8 +22,10 @@ import BookCode from './AdminComponent/College';
 import College from './AdminComponent/College';
 import BatchCategory from './AdminComponent/BatchCategory';
 import Faculty from './AdminComponent/LibraryBook';
-import { LibraryBooks } from '@mui/icons-material';
+// import { Feedback, LibraryBooks } from '@mui/icons-material';
 import LibraryBook from './AdminComponent/LibraryBook';
+import Feedback from './AdminComponent/Feedback';
+
 
 
 
@@ -75,8 +77,11 @@ const Router = createBrowserRouter([
       {
         path: '/librarybook',
         element: <LibraryBook/>
+      },
+      {
+        path: '/feedback',
+        element: <Feedback/>
       }
-
     ]
   }
 ])

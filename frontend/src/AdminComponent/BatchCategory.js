@@ -26,7 +26,7 @@ const BatchCategory = () => {
  
 
     const [value, setValue] = useState({
-        batchcategory: "" || uid.batchcategory,
+        batch: "" || uid.batch,
         batchtype: "" || uid.batchtype,
         prefix: "" || uid.prefix,
         description: "" || uid.description
@@ -35,7 +35,7 @@ const BatchCategory = () => {
 
     useEffect(() => {
         setValue({
-            batchcategory: uid.batchcategory,
+            batch: uid.batch,
             batchtype: uid.batchtype,
             prefix: uid.prefix,
             description: uid.description
@@ -58,7 +58,7 @@ const BatchCategory = () => {
     }
 
 
-    async function getColorData() {
+    async function getBatchData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -72,7 +72,7 @@ const BatchCategory = () => {
 
 
 
-    async function getColorData() {
+    async function getBatchData() {
         const data = {
             tablename: "awt_batch_category"
         }
@@ -87,7 +87,7 @@ const BatchCategory = () => {
     }
 
     useEffect(() => {
-        getColorData()
+        getBatchData()
         value.title = ""
         setError({})
         setUid([])
@@ -133,7 +133,7 @@ const BatchCategory = () => {
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getColorData()
+                getBatchData()
 
             })
             .catch((err) => {
@@ -151,16 +151,18 @@ const BatchCategory = () => {
 
         // if (validateForm()) {
             const data = {
-                batchcategory: value.batchcategory,
+                batch: value.batch,
                 batchtype: value.batchtype,
                 prefix: value.prefix,
-                description: value.description
+                description: value.description,
+                uid : uid.id
             }
 
 
             axios.post(`${BASE_URL}/batch_category`, data)
                 .then((res) => {
                     console.log(res)
+                    getBatchData()
 
                 })
                 .catch((err) => {
@@ -194,7 +196,7 @@ const BatchCategory = () => {
             flex: 1,
             filterable: false,
         },
-        { field: 'batchcategory', headerName: 'Batch Category Name', flex: 2 },
+        { field: 'batch', headerName: 'Batch Category', flex: 2 },
         { field: 'batchtype', headerName: 'Batch Type', flex: 2 },
         { field: 'prefix', headerName: 'Prefix', flex: 2 },
         { field: 'description', headerName: 'Description', flex: 2 },
@@ -234,7 +236,7 @@ const BatchCategory = () => {
                                         <div class='row'>
                                             <div class="form-group col-lg-4">
                                                 <label for="exampleInputUsername1">Batch Category<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.batchcategory} placeholder="Batch Category*" name='batchcategory' batchcategory={onhandleChange} />
+                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.batch} placeholder="Batch Category*" name='batch' batchcategory={onhandleChange} />
                                                 {/* {error.batchcategory && <span className='text-danger'>{error.batchcategory}</span>} */}
                                             </div>
                                             

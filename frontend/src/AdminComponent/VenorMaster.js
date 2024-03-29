@@ -81,7 +81,7 @@ const VendorMaster = () => {
     }
 
 
-    async function getColorData() {
+    async function getVendorData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -95,7 +95,7 @@ const VendorMaster = () => {
 
 
     
-    async function getColorData() {
+    async function getVendorData() {
         const data = {
             tablename : "awt_vendor_master"
         }
@@ -110,7 +110,7 @@ const VendorMaster = () => {
     }
 
     useEffect(() => {
-        getColorData()
+        getVendorData()
         value.title = ""
         setError({})
         setUid([])
@@ -156,7 +156,7 @@ const VendorMaster = () => {
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getColorData()
+                getVendorData()
 
             })
             .catch((err) => {
@@ -194,6 +194,7 @@ const VendorMaster = () => {
         axios.post(`${BASE_URL}/add_vendor`, data)
             .then((res) => {
                console.log(res)
+               getVendorData()
 
             })
             .catch((err) => {

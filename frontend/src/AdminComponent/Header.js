@@ -269,6 +269,14 @@ const Header = () => {
                 <span className="menu-title">Library Book</span>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/feedback">
+                {/* <Icon path={mdiCircleMedium } size={1} className='mx-3' /> */}
+                <Icon path={mdiCircleMedium } size={1} className='mx-3' />
+                <span className="menu-title">Feedback</span>
+              </Link>
+            </li>
+            
             
             {/* <li className="nav-item">
               <Link className="nav-link" to='/webapp/gallery'

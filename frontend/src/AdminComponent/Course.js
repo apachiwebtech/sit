@@ -29,7 +29,10 @@ const Course = () => {
         course: "" || uid.course,
         course_code: "" || uid.course_code,
         eligibility: "" || uid.eligibility,
-        introducation: "" || uid.introducation
+        introduction: "" || uid.introduction,
+        specification: "" || uid.specification,
+        specification2: "" || uid.specification2,
+        specification3: "" || uid.specification3
 
     })
 
@@ -38,7 +41,10 @@ const Course = () => {
             course: uid.course,
             course_code: uid.course_code,
             eligibility: uid.eligibility,
-            introducation: uid.introducation
+            introduction: uid.introduction,
+            specification : uid.specification,
+            specification2 : uid.specification2,
+            specification3 : uid.specification3
         })
     }, [uid])
 
@@ -58,7 +64,7 @@ const Course = () => {
     }
 
 
-    async function getColorData() {
+    async function getCourseData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -72,7 +78,7 @@ const Course = () => {
 
 
 
-    async function getColorData() {
+    async function getCourseData() {
         const data = {
             tablename: "awt_course"
         }
@@ -87,7 +93,7 @@ const Course = () => {
     }
 
     useEffect(() => {
-        getColorData()
+        getCourseData()
         value.title = ""
         setError({})
         setUid([])
@@ -133,7 +139,7 @@ const Course = () => {
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getColorData()
+                getCourseData()
 
             })
             .catch((err) => {
@@ -154,16 +160,18 @@ const Course = () => {
                 course: value.course,
                 course_code: value.course_code,
                 eligibility: value.eligibility,
-                introducation: value.introducation,
+                introduction: value.introduction,
                 specification :specification,
                 specification2 :specification2,
-                specification3 :specification3
+                specification3 :specification3,
+                uid : uid.id
             }
 
 
             axios.post(`${BASE_URL}/add_course`, data)
                 .then((res) => {
                     console.log(res)
+                    getCourseData()
 
                 })
                 .catch((err) => {
@@ -250,9 +258,9 @@ const Course = () => {
                                                 {error.eligibility && <div className="text-danger">{error.eligibility}</div>}
                                             </div>
                                             <div class="form-group col-lg-6">
-                                                <label for="exampleTextarea1">Introduction</label>
-                                                <textarea class="form-control" id="exampleTextarea1" name='introducation' value={value.introducation} placeholder="Introducation*" onChange={onhandleChange}></textarea>
-                                                {error.introducation && <div className="text-danger">{error.introducation}</div>}
+                                                <label for="exampleInputUsername1">Introduction</label>
+                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.introducation} placeholder="Introduction" name='introduction' onChange={onhandleChange} />
+                                                
                                             </div>
 
                                             <div class="form-group col-lg-12">

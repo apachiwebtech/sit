@@ -327,13 +327,15 @@ app.post('/add_vendor', (req, res) => {
    let sql
    let param;
 
+   console.log(uid)
+
    if(uid == undefined){
      sql = "insert into awt_vendor_master(`vendorname`,`email`,`telephone`,`type`,`address`,`country`,`state`,`city`,`pin`,`contactperson`,`mobile`,`fax`,`comment`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)"
 
      param =[vendorname,email,telephone,type,address,country,state,city,pin,contactperson,mobile,fax,comments]
 
    }else{
-    sql = "update awt_vendor_master set vendorname =? , email =? , telephone =? , type =? , address =? , country =? , state =? , city =? , pin =? , contactperson =? , mobile =? , fax =? , comments =? where id =?"
+    sql = "update `awt_vendor_master` set `vendorname` =? , `email` =? , `telephone` =? , `type` =? , `address` =? , `country` =? , `state` =? , `city` =? , `pin` =? , `contactperson` =? , `mobile` =? , `fax` =? , `comments` =? where id =?"
 
     param =[vendorname,email,telephone,type,address,country,state,city,pin,contactperson,mobile,fax,comments,uid]
 
@@ -353,21 +355,23 @@ app.post('/add_vendor', (req, res) => {
 
 
 app.post('/add_course', (req, res) => {
-  let {course,course_code,eligibility,introducation,specification,specification2,specification3,uid} = req.body
+  let {course,course_code,eligibility,introduction,specification,specification2,specification3,uid} = req.body
 
   let sql
   let param;
 
-  if(uid == undefined){
-    sql = "insert into awt_course(`course`,`course_code`,`eligibility`,`introducation`,`key_points`,`objective`,`basic_study`) values(?,?,?,?,?,?,?)"
+  console.log(uid)
 
-    param =[course,course_code,eligibility,introducation,specification,specification2,specification3]
+  if(uid == undefined){
+    sql = "insert into awt_course(`course`,`course_code`,`eligibility`,`introduction`,`key_points`,`objective`,`basic_study`) values(?,?,?,?,?,?,?)"
+
+    param =[course,course_code,eligibility,introduction,specification,specification2,specification3]
   }
 
   else{
-    sql = "update awt_course set course =? , course_code =? , eligibility =? , introducation =? , key_points =? , objective =? , basic_study =? , where id =?"
+    sql = "update `awt_course` set `course` =? , `course_code` =? , `eligibility` =? , `introducation` =? , `key_points` =? , `objective` =? , `basic_study` =?  where `id` =?"
 
-    param =[course,course_code,eligibility,introducation,specification,specification2,specification3]
+    param =[course,course_code,eligibility,introduction,specification,specification2,specification3,uid]
 
    }
 
@@ -384,20 +388,22 @@ app.post('/add_course', (req, res) => {
 
 app.post('/batch_category', (req, res) => {
    
-  let {batchcategory,batchtype,prefix,description,uid} = req.body
+  let {batch,batchtype,prefix,description,uid} = req.body
 
    let sql
    let param;
 
-   if(uid == undefined){
-     sql = "insert into awt_batch_category(`batchcategory`,`batchtype`,`prefix`,`description`) values(?,?,?,?)"
+   console.log(uid)
 
-     param =[batchcategory,batchtype,prefix,description]
+   if(uid == undefined){
+     sql = "insert into awt_batch_category(`batch`,`batchtype`,`prefix`,`description`) values(?,?,?,?)"
+
+     param =[batch,batchtype,prefix,description]
 
    }else{
-    sql = "update awt_batch_category set batchcategory =? , batchtype =? , prefix =? , description =? where id =?"
+    sql = "update `awt_batch_category` set `batch` = ? , `batchtype` = ? , `prefix` = ? , `description` = ? where id =?"
 
-    param =[batchcategory,batchtype,prefix,description,uid]
+    param =[batch,batchtype,prefix,description,uid]
 
    }
 
@@ -415,23 +421,89 @@ app.post('/batch_category', (req, res) => {
 
 app.post('/add_college', (req, res) => {
    
-  let {college,university,contactperson,designation,address,pin,country,state,telephone,mobile,email,website,remark,purpose,course,uid} = req.body
+  let {college_name,university,contact_person,designation,address,city,pin,country,state,telephone,mobile,email,website,remark,purpose,course,uid} = req.body
 
    let sql
    let param;
 
-   if(uid == undefined){
-     sql = "insert into awt_college(`college`,`university`,`contactperson`,`designation`,`address`,`pin`,`country`,`state`,`telephone`,`mobile`,`email`,`website`,`remark`,`purpose`,`course`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+   console.log(uid)
 
-     param =[college,university,contactperson,designation,address,pin,country,state,telephone,mobile,email,website,remark,purpose,course]
+   if(uid == undefined){
+     sql = "insert into awt_college(`college_name`,`university`,`contact_person`,`designation`,`address`,`city`,`pin`,`country`,`state`,`telephone`,`mobile`,`email`,`website`,`remark`,`purpose`,`course`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+
+     param =[college_name,university,contact_person,designation,address,city,pin,country,state,telephone,mobile,email,website,remark,purpose,course]
 
    }else{
-    sql = "update awt_college set college =? , university =? , contactperson =? , designation =? , address =? , pin =? , country =? , country =? , state =? , telephone =? , mobile =? , email =? , website =? , remark =? , purpose =? , course =?  where id =?"
+    sql = "update `awt_college` set `college_name` =? , `university` =? , `contact_person` =? , `designation` =? , `address` =? , `city` =? , `pin` =? , `country` =? , `state` =? , `telephone` =? , `mobile` =? , `email` =? , `website` =? , `remark` =? , `purpose` =? , `course` =?  where id =?"
 
-    param =[college,university,contactperson,designation,address,pin,country,state,telephone,mobile,email,website,remark,purpose,course]
+    param =[college_name,university,contact_person,designation,address,city,pin,country,state,telephone,mobile,email,website,remark,purpose,course,uid]
 
    }
 
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+
+app.post('/add_librarybook', (req, res) => {
+
+  let {bookname,booknumber,publication,page,status,comment,coursename,author,purchasedate,price,rackno,uid} = req.body
+
+   let sql
+   let param;
+
+   console.log(uid)
+
+   if(uid == undefined){
+     sql = "insert into awt_librarybook(`bookname`,`booknumber`,`publication`,`page`,`status`,`comment`,`coursename`,`author`,`purchasedate`,`price`,`rackno`) values(?,?,?,?,?,?,?,?,?,?,?)"
+
+     param =[bookname,booknumber,publication,page,status,comment,coursename,author,purchasedate,price,rackno]
+
+   }else{
+    sql = "update `awt_librarybook` set `bookname` =? , `booknumber` =? , `publication` =? , `page` =? , `status` =? , `comment` =? , `coursename` =? , `author` =? , `purchasedate` =? , `price` =? , `rackno` = ? where id = ?"
+
+    param =[bookname,booknumber,publication,page,status,comment,coursename,author,purchasedate,price,rackno,uid]
+
+   }
+
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+app.post('/add_feedback', (req, res) => {
+ 
+  let {questionfor,category,question,selection,order,uid} = req.body
+
+   let sql
+   let param;
+
+   console.log(uid)
+
+   if(uid == undefined){
+     sql = "insert into awt_feedback(`questionfor`,`category`,`question`,`selection`,`order`) values(?,?,?,?,?)"
+
+     param =[questionfor,category,question,selection,order]
+
+   }else{
+    sql = "update `awt_feedback` set `questionfor` =? , `category` =? , `question` =? , `selection` =? , `order` =? where id = ?"
+
+    param =[questionfor,category,question,selection,order,uid]
+
+   }
 
   con.query(sql,param,(err, data) => {
     if (err) {
