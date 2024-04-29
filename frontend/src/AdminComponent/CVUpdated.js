@@ -6,14 +6,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
+import { DataGrid ,GridToolbar } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { LibraryBooks } from '@mui/icons-material';
 
 
-const Feedback = () => {
+const CVUpdated = () => {
 
     const [brand, setBrand] = useState([])
     const [vendordata, setVendorData] = useState([])
@@ -35,35 +34,36 @@ const Feedback = () => {
       setChecked([checked[0], event.target.checked]);
     };
 
-    // const suggestion = (
-    //     <Box sx={{flexDirection: 'column', }}>
-    //       <FormControlLabel
-    //         label="Suggestion Required"
-    //         control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-    //       />
-    //       <FormControlLabel
-    //         label="Brief answer required"
-    //         control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-    //       />
-    //     </Box>
-    //   );
-
-        const [selectedOption, setSelectedOption] = useState('');
-      
-        //Function to handle radio button change
-        const handleOptionChange = (event) => {
-          setSelectedOption(event.target.value);
-        };
-
-
-
+    const children = (
+        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+          <FormControlLabel
+            label="Child 1"
+            control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+          />
+          <FormControlLabel
+            label="Child 2"
+            control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+          />
+        </Box>
+      );
 
     const [value, setValue] = useState({
-        questionfor : ""|| uid.questionfor,
-        category : ""|| uid.category,
-        question : ""|| uid.question,
-        selection : ""|| uid.selection,
-        order : ""|| uid.order
+        college_name : "" || uid.college_name,
+        university : "" || uid.university,
+        contact_person : "" || uid.contact_person,
+        designation : ""|| uid.designation,
+        address : ""|| uid.address,
+        city : ""|| uid.city,
+        pin : ""|| uid.pin,
+        state : ""|| uid.state,
+        country: ""|| uid.country,
+        telephone: ""|| uid.telephone,
+        mobile: ""|| uid.mobile,
+        email: ""|| uid.email,
+        website: ""|| uid.website,
+        remark: ""|| uid.remark,
+        purpose: ""|| uid.purpose,
+        course: ""|| uid.course
 
 
     })
@@ -71,11 +71,22 @@ const Feedback = () => {
     useEffect(() => {
         setValue({
 
-        questionfor : uid.questionfor,
-        category : uid.category,
-        question : uid.question,
-        selection : uid.selection,
-        order :uid.order
+            college_name : uid.college_name,
+           university : uid.university,
+           contact_person : uid.contact_person,
+           designation : uid.designation,
+           address : uid.address,
+           city : uid.city,
+           pin : uid.pin,
+           country: uid.country,
+           state : uid.state,
+           telephone: uid.telephone,
+           mobile: uid.mobile,
+           email: uid.email,
+           website: uid.website,
+           remark: uid.remark,
+           purpose: uid.purpose,
+           course: uid.course
    
 
         })
@@ -100,7 +111,7 @@ const Feedback = () => {
     // }
 
 
-    async function getFeedData() {
+    async function getCollegeData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -114,9 +125,9 @@ const Feedback = () => {
 
 
     
-    async function getFeedData() {
+    async function getCollegeData() {
         const data = {
-            tablename : "awt_feedback"
+            tablename : "awt_college"
         }
         axios.post(`${BASE_URL}/get_data`,data)
             .then((res) => {
@@ -129,7 +140,7 @@ const Feedback = () => {
     }
 
     useEffect(() => {
-        getFeedData()
+        getCollegeData()
         value.title = ""
         setError({})
         setUid([])
@@ -154,7 +165,7 @@ const Feedback = () => {
     const handleUpdate = (id) => {
         const data = {
             u_id : id,
-            tablename : "awt_feedback"
+            tablename : "awt_college"
         }
         axios.post(`${BASE_URL}/update_data`, data)
             .then((res) => {
@@ -170,12 +181,12 @@ const Feedback = () => {
     const handleDelete = (id) => {
         const data = {
             cat_id: id,
-            tablename : "awt_feedback"
+            tablename : "awt_college"
         }
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getFeedData()
+                getCollegeData()
 
             })
             .catch((err) => {
@@ -193,20 +204,30 @@ const Feedback = () => {
 
     // if(validateForm()){
         const data = {
-            
-        questionfor : value.questionfor,
-        category : value.category,
-        question : value.question,
-        selection : value.selection,
-        order :value.order,
-        uid : uid.id
+            college_name : value.college_name,
+            university : value.university,
+            contact_person : value.contact_person,
+            designation : value.designation,
+            address : value.address,
+            city : value.city,
+            pin : value.pin,
+            country: value.country,
+            state : value.state,
+            telephone: value.telephone,
+            mobile: value.mobile,
+            email: value.email,
+            website: value.website,
+            remark: value.remark,
+            purpose: value.purpose,
+            course: value.course,
+            uid:uid.id
         }
 
 
-        axios.post(`${BASE_URL}/add_feedback`, data)
+        axios.post(`${BASE_URL}/add_college`, data)
             .then((res) => {
                console.log(res)
-               getFeedData()
+               getCollegeData()
 
             })
             .catch((err) => {
@@ -240,9 +261,12 @@ const Feedback = () => {
             flex: 1,
             filterable: false,
         },
-        { field: 'questionfor', headerName: 'Question For', flex: 2 },
-        { field: 'question', headerName: 'Question', flex: 2 },
-        { field: 'order', headerName: 'Question Order', flex: 2},
+        { field: 'college_name', headerName: 'College_Name', flex: 2 },
+        { field: 'university', headerName: 'University', flex: 2 },
+        { field: 'contact_person', headerName: 'Contact_Person', flex: 2},
+        { field: 'designation', headerName: 'Designation', flex: 2},
+        { field: 'address', headerName: 'Address', flex: 2},
+        { field: 'city', headerName: 'City', flex: 2},
         
         {
             field: 'actions',
@@ -273,85 +297,80 @@ const Feedback = () => {
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Feedback Questions</h4>
+                                    <h4 class="card-title">Latested CVUpdated</h4>
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Question For </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.questionfor} onChange={onhandleChange} name='questionfor'>
-                                                    <option>Question For</option>
-                                                    <option>Training in Process Plant System Modelling Using E3D</option>
-                                                    <option>Advance Pipe Stress Analysis</option>
-                                                    <option>Air Conditioning System Design (HVAC)</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Category </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.category} onChange={onhandleChange} name='category'>
-                                                    <option>Category</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
+                                            
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleInputUsername1">Date</label>
+                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.date} placeholder="Purpose" name='date' onChange={onhandleChange} />
+                                                
                                             </div>
                                             
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Selection Type</label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.selection} onChange={onhandleChange} name='selection'>
-                                                    <option>Select</option>
-                                                    <option>FreeTextBox</option>
-                                                    <option>Numeric</option>
-                                                    <option>Multiple Selection</option>
-                                                    <option>Yes /No /May Be</option>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleFormControlSelect1">Course Name</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.coursename} onChange={onhandleChange} name='coursename'>
+                                                    <option> Allied System &amp; Integrators Private Limited</option>
+                                                    <option> Amocon Refrigeration &amp; Engineering Co.</option>
+                                                    <option> Anand Systems Engineering Pvt. Ltd.</option>
+                                                    <option> Avenir International Engineers &amp; Consultants LLC, Abu Dhabi</option>
+                                                    <option> Bertrams India Pvt. Ltd.- (Formerly-Chemical &amp; Environmental Technologies- Thane)              </option>
+                                                    <option> Chloro Controls Equipment Co - Same as Capital Controls</option>
+                                                    <option> Chromline Equipment India Pvt Ltd</option>
+                                                    <option> Constellation Total Solution Private Limited</option>
+                                                    <option> Contento Engineering Pvt. Ltd</option>
+                                                    <option> CRISTAL INSTRUMENTS</option>
+                                                    <option> Echelon CAE Services Pvt. Ltd.</option>
+                                                    <option> Entech consultancy bureau (madras) pvt. ltd. </option>
+                                                    <option> Enventure Technology Services</option>
+                                                    <option> ENVIRO ANALYSTS &amp; ENGINEERS PVT. LTD</option>
+                                                    <option> Expert Global Solutions Pvt. Ltd.-Hyderabad</option>
+                                                    <option> Gemsons Precision Engineering (P) Ltd.- Don&#39;t contact this company</option>
+                                                    <option> Hitech Instrumentation (India) Pvt Ltd </option>
+                                                    <option> Indrox Global Pvt. Ltd.</option>
+                                                    <option> Indus Engineers Pvt Ltd</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleFormControlSelect1">Batch Code </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.batchcode} onChange={onhandleChange} name='batchcode'>
+                                                    <option>01254</option>
+                                                    <option>95475</option>
+                                                    <option>01212</option>
+                                                    <option>04245</option>
+                                                    <option>02548</option>
+                                                    <option>03568</option>
+                                                    <option>09865</option>
+                                                    <option>03214</option>
+                                                    <option>03521</option>
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Order</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.order} placeholder="Order" name='order' onChange={onhandleChange} />
-                                               
-                                            </div>
+                                            
 
-
-                                            <div class="form-group col-lg-4">
-                                                <label for="exampleInputUsername1">Question</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.question} placeholder="Question" name='question' onChange={onhandleChange} />
-                                               
-                                            </div>
+                                                {/* <div>
+                                            <FormControlLabel
+                                                label="Parent"
+                                                control={
+                                                <Checkbox
+                                                    checked={checked[0] && checked[1]}
+                                                    indeterminate={checked[0] !== checked[1]}
+                                                    onChange={handleChange1}
+                                                />
+                                                }
+                                            />
+                                            {children}
+                                            </div> */}
 
                                             
 
                                         </div>
-                                        <div>
-                                            <div>
-                                                <label>
-                                                    <input
-                                                    name='suggestion'
-                                                    type="radio"
-                                                    value="Suggestion Required"
-                                                    checked={selectedOption === "Suggestion Required"}
-                                                    onChange={handleOptionChange}
-                                                    />
-                                                    Suggestion Required
-                                                </label>
-
-                                                <label className='mx-5'>
-                                                    <input
-                                                    name='brief'
-                                                    type="radio"
-                                                    value="Brief answer required"
-                                                    checked={selectedOption === "Brief answer required"}
-                                                    onChange={handleOptionChange}
-                                                    />
-                                                    Brief answer required
-                                                </label>
-
-
-                                                <div>Selected option: {selectedOption}</div>
-                                            </div>
-                                        </div>
                                             
 
+                                          
+                          
+                                        
 
 
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -368,13 +387,13 @@ const Feedback = () => {
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
                                         <div>
-                                            <h4 class="card-title">Feedback Details</h4>
+                                            <h4 class="card-title">View College Information</h4>
                                         </div>
 
                                     </div>
 
                                     <div>
-                                    <DataGrid
+                                        <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
                                             disableColumnFilter
@@ -417,4 +436,4 @@ const Feedback = () => {
     )
 }
 
-export default Feedback
+export default CVUpdated

@@ -18689,6 +18689,7 @@ html {
 
 .container-scroller {
   overflow: hidden;
+  flex-wrap: nowrap;
 }
 
 pre {
@@ -20608,7 +20609,7 @@ dl li {
 .sidebar .nav .nav-item .nav-link .menu-title {
   color: inherit;
   display: inline-block;
-  font-size: 0.937rem;
+  font-size: 12px;
   line-height: 1;
   vertical-align: middle;
   font-weight: bold;

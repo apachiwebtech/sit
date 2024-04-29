@@ -6,59 +6,91 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { LibraryBooks } from '@mui/icons-material';
 
 
-const BatchCategory = () => {
+const BookIssue = () => {
 
     const [brand, setBrand] = useState([])
     const [vendordata, setVendorData] = useState([])
-    const [specification, setSpecification] = useState("")
-    const [specification2, setSpecification2] = useState("")
-    const [specification3, setSpecification3] = useState("")
     const [uid, setUid] = useState([])
     const [cid, setCid] = useState("")
     const [error, setError] = useState({})
     const [confirmationVisibleMap, setConfirmationVisibleMap] = useState({});
+    const [checked, setChecked] = React.useState([true, false]);
 
- 
+    const handleChange1 = (event) => {
+      setChecked([event.target.checked, event.target.checked]);
+    };
+  
+    const handleChange2 = (event) => {
+      setChecked([event.target.checked, checked[1]]);
+    };
+  
+    const handleChange3 = (event) => {
+      setChecked([checked[0], event.target.checked]);
+    };
+
+    // const children = (
+    //     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+    //       <FormControlLabel
+    //         label="Child 1"
+    //         control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+    //       />
+    //       <FormControlLabel
+    //         label="Child 2"
+    //         control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+    //       />
+    //     </Box>
+    //   );
 
     const [value, setValue] = useState({
-        batch: "" || uid.batch,
-        batchtype: "" || uid.batchtype,
-        prefix: "" || uid.prefix,
-        description: "" || uid.description
+        student : "" || uid.student,
+        book : "" || uid.book,
+        bookcode : "" || uid.bookcode,
+        issuedate : ""|| uid.issuedate,
+        returndate : ""|| uid.status,
+        
+
 
     })
 
     useEffect(() => {
         setValue({
-            batch: uid.batch,
-            batchtype: uid.batchtype,
-            prefix: uid.prefix,
-            description: uid.description
+            student : uid.student,
+            book : uid.book,
+            bookcode : uid.bookcode,
+            issuedate : uid.issuedate,
+            returndate :uid.returndate,
+   
+
         })
     }, [uid])
 
 
-    const validateForm = () => {
-        let isValid = true
-        const newErrors = {}
+    // const validateForm = () => {
+    //     let isValid = true
+    //     const newErrors = {}
 
 
-        if (!value.course) {
-            isValid = false;
-            newErrors.name = "Name is require"
-        }
+    //    if (!value.college) {
+    //     isValid = false;
+    //     newErrors.name = "Name is require"
+    //    }
+    //     if (!value.email) {
+    //         isValid = false;
+    //         newErrors.email = "Email is require"
+    //     }
+    //     setError(newErrors)
+    //     return isValid
+    // }
 
-        setError(newErrors)
-        return isValid
-    }
 
-
-    async function getBatchData() {
+    async function getBookData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -71,12 +103,12 @@ const BatchCategory = () => {
     }
 
 
-
-    async function getBatchData() {
+    
+    async function getBookData() {
         const data = {
-            tablename: "awt_batch_category"
+            tablename : "awt_bookissue"
         }
-        axios.post(`${BASE_URL}/get_data`, data)
+        axios.post(`${BASE_URL}/get_data`,data)
             .then((res) => {
                 console.log(res.data)
                 setVendorData(res.data)
@@ -87,7 +119,7 @@ const BatchCategory = () => {
     }
 
     useEffect(() => {
-        getBatchData()
+        getBookData()
         value.title = ""
         setError({})
         setUid([])
@@ -111,14 +143,14 @@ const BatchCategory = () => {
 
     const handleUpdate = (id) => {
         const data = {
-            u_id: id,
-            tablename: "awt_batch_category"
+            u_id : id,
+            tablename : "awt_bookissue"
         }
         axios.post(`${BASE_URL}/update_data`, data)
             .then((res) => {
                 setUid(res.data[0])
 
-                console.log(res.data, "update")
+                console.log(res.data , "update")
             })
             .catch((err) => {
                 console.log(err)
@@ -128,12 +160,12 @@ const BatchCategory = () => {
     const handleDelete = (id) => {
         const data = {
             cat_id: id,
-            tablename: "awt_batch_category"
+            tablename : "awt_bookissue"
         }
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getBatchData()
+                getBookData()
 
             })
             .catch((err) => {
@@ -149,29 +181,31 @@ const BatchCategory = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // if (validateForm()) {
-            const data = {
-                batch: value.batch,
-                batchtype: value.batchtype,
-                prefix: value.prefix,
-                description: value.description,
-                uid : uid.id
-            }
+    // if(validateForm()){
+        const data = {
+            
+        student : value.student,
+        book : value.book,
+        bookcode : value.bookcode,
+        issuedate : value.issuedate,
+        returndate :value.returndate,
+        uid : uid.id
+        }
 
 
-            axios.post(`${BASE_URL}/batch_category`, data)
-                .then((res) => {
-                    console.log(res)
-                    getBatchData()
+        axios.post(`${BASE_URL}/add_bookissue`, data)
+            .then((res) => {
+               console.log(res)
+               getBookData()
 
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        // }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    // }
 
-
-
+   
+        
 
 
     }
@@ -181,8 +215,8 @@ const BatchCategory = () => {
         setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
-
-
+ 
+    
 
 
 
@@ -196,11 +230,12 @@ const BatchCategory = () => {
             flex: 1,
             filterable: false,
         },
-        { field: 'batch', headerName: 'Batch Category', flex: 2 },
-        { field: 'batchtype', headerName: 'Batch Type', flex: 2 },
-        { field: 'prefix', headerName: 'Prefix', flex: 2 },
-        { field: 'description', headerName: 'Description', flex: 2 },
-
+        { field: 'student', headerName: 'Student Name', flex: 2 },
+        { field: 'book', headerName: 'Book', flex: 2 },
+        { field: 'bookcode', headerName: 'Book Code', flex: 2},
+        { field: 'issuedate', headerName: 'Issue Date', flex: 2},
+        { field: 'returndate', headerName: 'Return Date.', flex: 2},
+        
         {
             field: 'actions',
             type: 'actions',
@@ -230,40 +265,42 @@ const BatchCategory = () => {
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Batch Information</h4>
+                                    <h4 class="card-title">Book Issue Details</h4>
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
                                             <div class="form-group col-lg-3">
-                                                <label for="exampleInputUsername1">Batch Category<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.batch} placeholder="Batch Category*" name='batch' batchcategory={onhandleChange} />
-                                                {/* {error.batchcategory && <span className='text-danger'>{error.batchcategory}</span>} */}
+                                                <label for="exampleInputUsername1">Students Name<span className='text-danger'>*</span></label>
+                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.student} placeholder="Student Name*" name='student' onChange={onhandleChange} />
+                                                {error.student && <span className='text-danger'>{error.student}</span>}
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleInputUsername1">Book</label>
+                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.book} placeholder="Book *" name='book' onChange={onhandleChange} />
+                                                {error.book && <span className='text-danger'>{error.book}</span>}
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleInputUsername1">Book Code</label>
+                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.bookcode} placeholder="Book Code*" name='bookcode' onChange={onhandleChange} />
+                                                {error.bookcode && <span className='text-danger'>{error.bookcode}</span>}
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleInputUsername1">Issue Date</label>
+                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.issuedate} name='issuedate' onChange={onhandleChange} />
+                                               
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleInputUsername1">Return Date</label>
+                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.returndate} name='returndate' onChange={onhandleChange} />
+                                                
                                             </div>
                                             
-                                            <div class="form-group col-lg-3">
-                                                <label for="exampleFormControlSelect1">Batch Type </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.batchtype} onChange={onhandleChange} name='batchtype'>
-                                                    <option></option>
-                                                    <option value="1">Inhouse</option>
-                                                    <option value="2">Corporate</option>
-                                                    <option value="3">Transfer</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label for="exampleInputUsername1">Prefix</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.prefix} placeholder="Course Code*" name='prefix' onChange={onhandleChange} />
-                                                {/* {error.course_code && <span className='text-danger'>{error.course_code}</span>} */}
-                                            </div>
 
-                                            <div class="form-group col-lg-3">
-                                                <label for="exampleTextarea1">Description</label>
-                                                <textarea class="form-control" id="exampleTextarea1" name='description' value={value.description} placeholder="Description*" onChange={onhandleChange}></textarea>
-                                                {/* {error.introducation && <div className="text-danger">{error.introducation}</div>} */}
-                                            </div>
-
-
+                                            
 
                                         </div>
+                                            
+
 
 
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -280,30 +317,19 @@ const BatchCategory = () => {
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
                                         <div>
-                                            <h4 class="card-title">View Batch Category</h4>
-                                            
+                                            <h4 class="card-title">Book Issue</h4>
                                         </div>
 
                                     </div>
 
                                     <div>
-                                    <DataGrid
+                                        <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
-                                            disableColumnFilter
-                                            disableColumnSelector
-                                            disableDensitySelector
-                                            rowHeight={35}
                                             getRowId={(row) => row.id}
                                             initialState={{
                                                 pagination: {
                                                     paginationModel: { pageSize: 10, page: 0 },
-                                                },
-                                            }}
-                                            slots={{ toolbar: GridToolbar }}
-                                            slotProps={{
-                                                toolbar: {
-                                                    showQuickFilter: true,
                                                 },
                                             }}
                                         />
@@ -330,4 +356,4 @@ const BatchCategory = () => {
     )
 }
 
-export default BatchCategory
+export default BookIssue

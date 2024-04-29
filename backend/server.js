@@ -514,3 +514,137 @@ app.post('/add_feedback', (req, res) => {
     }
   })
 })
+
+
+
+app.post('/add_faculty', (req, res) => {
+
+ 
+  let {facultyname,facultycode,dob,nationality,discipline,status,invoicename,maritalstatus,joiningdate,employment,software,training,address,city,pin,state,country,mobile,email,full_address,city_name,pin_code,state_name,country_name,mobi,uid} = req.body
+
+   let sql
+   let param;
+
+   console.log(uid)
+
+   if(uid == undefined){
+     sql = "insert into awt_faculty(`facultyname`,`facultycode`,`dob`,`nationality`,`discipline`,`status`,`invoicename`,`maritalstatus`,`joiningdate`,`employment`,`software`,`training`,`address`,`city`,`pin`,`state`,`country`,`mobile`,`email`,`full_address`,`city_name`,`pin_code`,`state_name`,`country_name`,`mobi`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+
+     param =[facultyname,facultycode,dob,nationality,discipline,status,invoicename,maritalstatus,joiningdate,employment,software,training,address,city,pin,state,country,mobile,email,full_address,city_name,pin_code,state_name,country_name,mobi]
+
+   }else{
+    sql = "update `awt_faculty` set `facultyname` =? , `facultycode` =? , `dob` =? , `nationality` =? , `discipline` =? , `status` =? , `invoicename` =? , `maritalstatus` =? , `joiningdate` =? , `employment` =? , `software` =? , `training` =? , `address` =? , `city` =? , `pin` =? , `state` =? , `country` =? , `mobile` =? , `email` =? , `full_address` =? , `city_name` =? , `pin_code` =? , `state_name` =? , `country_name` =? , `mobi` =? where id = ?"
+
+    param =[facultyname,facultycode,dob,nationality,discipline,status,invoicename,maritalstatus,joiningdate,employment,software,training,address,city,pin,state,country,mobile,email,full_address,city_name,pin_code,state_name,country_name,mobi,uid]
+
+   }
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+
+app.post('/add_annual', (req, res) => {
+ 
+  let {selectcourse,category,description,training,actualdate,timings,coursename,batchcode,planned,admission,duration,coordinator,uid} = req.body
+
+   let sql
+   let param;
+
+   console.log(uid)
+
+   if(uid == undefined){
+     sql = "insert into awt_annual(`selectcourse`,`category`,`description`,`training`,`actualdate`,`timings`,`coursename`,`batchcode`,`planned`,`admission`,`duration`,`coordinator`) values(?,?,?,?,?,?,?,?,?,?,?,?)"
+
+     param =[selectcourse,category,description,training,actualdate,timings,coursename,batchcode,planned,admission,duration,coordinator]
+
+   }else{
+    sql = "update `awt_annual` set `selectcourse` =? , `category` =? , `description` =? ,`training` =? ,`actualdate` =? ,`timings` =? ,`coursename` =? ,`batchcode` =? ,`planned` =? ,`admission` =? ,`duration` =? ,`coordinator` =? where id = ?"
+
+    param =[selectcourse,category,description,training,actualdate,timings,coursename,batchcode,planned,admission,duration,coordinator,uid]
+
+   }
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+
+app.post('/add_bookissue', (req, res) => {
+
+  let {student,book,bookcode,issuedate,returndate,uid} = req.body
+
+   let sql
+   let param;
+
+   console.log(uid)
+
+   if(uid == undefined){
+     sql = "insert into awt_bookissue(`student`,`book`,`bookcode`,`issuedate`,`returndate`) values(?,?,?,?,?)"
+
+     param =[student,book,bookcode,issuedate,returndate]
+
+   }else{
+    sql = "update `awt_bookissue` set `student` =? , `book` =? , `bookcode` =? ,`issuedate` =? ,`returndate` =? where id = ?"
+
+    param =[student,book,bookcode,issuedate,returndate,uid]
+
+   }
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+
+
+app.post('/add_employeerecord', (req, res) => {
+
+
+  let {training,attendee,instructor,description,feedback,uid} = req.body
+
+   let sql
+   let param;
+
+   console.log(uid)
+
+   if(uid == undefined){
+     sql = "insert into awt_employeerecord(`training`,`attendee`,`instructor`,`description`,`feedback`) values(?,?,?,?,?)"
+
+     param =[training,attendee,instructor,description,feedback]
+
+   }else{
+    sql = "update `awt_employeerecord` set `training` =? , `attendee` =? , `instructor` =? ,`description` =? , `feedback` =? where id = ?"
+
+    param =[training,attendee,instructor,description,feedback,uid]
+
+   }
+
+  con.query(sql,param,(err, data) => {
+    if (err) {
+      return res.json(err)
+    }
+    else {
+      return res.json(data)
+    }
+  })
+})
+
+

@@ -6,14 +6,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
+import { DataGrid ,GridToolbar } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { LibraryBooks } from '@mui/icons-material';
 
 
-const LibraryBook = () => {
+const LectureTaken = () => {
 
     const [brand, setBrand] = useState([])
     const [vendordata, setVendorData] = useState([])
@@ -35,31 +35,35 @@ const LibraryBook = () => {
       setChecked([checked[0], event.target.checked]);
     };
 
-    // const children = (
-    //     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+    // const suggestion = (
+    //     <Box sx={{flexDirection: 'column', }}>
     //       <FormControlLabel
-    //         label="Child 1"
+    //         label="Suggestion Required"
     //         control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
     //       />
     //       <FormControlLabel
-    //         label="Child 2"
+    //         label="Brief answer required"
     //         control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
     //       />
     //     </Box>
     //   );
 
+        const [selectedOption, setSelectedOption] = useState('');
+      
+        //Function to handle radio button change
+        const handleOptionChange = (event) => {
+          setSelectedOption(event.target.value);
+        };
+
+
+
+
     const [value, setValue] = useState({
-        bookname : "" || uid.bookname,
-        booknumber : "" || uid.booknumber,
-        publication : "" || uid.publication,
-        page : ""|| uid.page,
-        status : ""|| uid.status,
-        comment : ""|| uid.comment,
-        coursename : ""|| uid.coursename,
-        author : ""|| uid.author,
-        purchasedate: ""|| uid.purchasedate,
-        price: ""|| uid.price,
-        rackno: ""|| uid.rackno
+        questionfor : ""|| uid.questionfor,
+        category : ""|| uid.category,
+        question : ""|| uid.question,
+        selection : ""|| uid.selection,
+        order : ""|| uid.order
 
 
     })
@@ -67,17 +71,11 @@ const LibraryBook = () => {
     useEffect(() => {
         setValue({
 
-        bookname : uid.bookname,
-        booknumber : uid.booknumber,
-        publication : uid.publication,
-        page : uid.page,
-        status :uid.status,
-        comment : uid.comment,
-        coursename : uid.coursename,
-        author : uid.author,
-        purchasedate: uid.purchasedate,
-        price: uid.price,
-        rackno: uid.rackno
+        questionfor : uid.questionfor,
+        category : uid.category,
+        question : uid.question,
+        selection : uid.selection,
+        order :uid.order
    
 
         })
@@ -102,7 +100,7 @@ const LibraryBook = () => {
     // }
 
 
-    async function getLibraryData() {
+    async function getFeedData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -116,9 +114,9 @@ const LibraryBook = () => {
 
 
     
-    async function getLibraryData() {
+    async function getFeedData() {
         const data = {
-            tablename : "awt_librarybook"
+            tablename : "awt_feedback"
         }
         axios.post(`${BASE_URL}/get_data`,data)
             .then((res) => {
@@ -131,7 +129,7 @@ const LibraryBook = () => {
     }
 
     useEffect(() => {
-        getLibraryData()
+        getFeedData()
         value.title = ""
         setError({})
         setUid([])
@@ -156,7 +154,7 @@ const LibraryBook = () => {
     const handleUpdate = (id) => {
         const data = {
             u_id : id,
-            tablename : "awt_librarybook"
+            tablename : "awt_feedback"
         }
         axios.post(`${BASE_URL}/update_data`, data)
             .then((res) => {
@@ -172,12 +170,12 @@ const LibraryBook = () => {
     const handleDelete = (id) => {
         const data = {
             cat_id: id,
-            tablename : "awt_librarybook"
+            tablename : "awt_feedback"
         }
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getLibraryData()
+                getFeedData()
 
             })
             .catch((err) => {
@@ -196,25 +194,19 @@ const LibraryBook = () => {
     // if(validateForm()){
         const data = {
             
-        bookname : value.bookname,
-        booknumber : value.booknumber,
-        publication : value.publication,
-        page : value.page,
-        status :value.status,
-        comment : value.comment,
-        coursename : value.coursename,
-        author : value.author,
-        purchasedate: value.purchasedate,
-        price: value.price,
-        rackno: value.rackno,
+        questionfor : value.questionfor,
+        category : value.category,
+        question : value.question,
+        selection : value.selection,
+        order :value.order,
         uid : uid.id
         }
 
 
-        axios.post(`${BASE_URL}/add_librarybook`, data)
+        axios.post(`${BASE_URL}/add_feedback`, data)
             .then((res) => {
                console.log(res)
-               getLibraryData()
+               getFeedData()
 
             })
             .catch((err) => {
@@ -248,11 +240,9 @@ const LibraryBook = () => {
             flex: 1,
             filterable: false,
         },
-        { field: 'bookname', headerName: 'Book Name', flex: 2 },
-        { field: 'booknumber', headerName: 'Book Number', flex: 2 },
-        { field: 'coursename', headerName: 'Course Name', flex: 2},
-        { field: 'purchasedate', headerName: 'Purchase Date', flex: 2},
-        { field: 'rackno', headerName: 'Rach No.', flex: 2},
+        { field: 'questionfor', headerName: 'Question For', flex: 2 },
+        { field: 'question', headerName: 'Question', flex: 2 },
+        { field: 'order', headerName: 'Question Order', flex: 2},
         
         {
             field: 'actions',
@@ -275,7 +265,7 @@ const LibraryBook = () => {
 
     return (
 
-        <div class="container-fluid page-body-wrapper">
+        <div class="container-fluid page-body-wrapper col-lg-10">
             <InnerHeader />
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -283,92 +273,102 @@ const LibraryBook = () => {
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Add Library Book Details</h4>
+                                    <h4 class="card-title">Add Lecture Details</h4>
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
                                             <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Book Name<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.bookname} placeholder="Book Name*" name='bookname' onChange={onhandleChange} />
-                                                {error.bookname && <span className='text-danger'>{error.bookname}</span>}
+                                                <label for="exampleFormControlSelect1">Course</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.course} onChange={onhandleChange} name='course'>
+                                                    <option>Select Course</option>
+                                                    <option>Training in Process Plant System Modelling Using E3D</option>
+                                                    <option>Advance Pipe Stress Analysis</option>
+                                                    <option>Air Conditioning System Design (HVAC)</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Book Number<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.booknumber} placeholder="Book Number*" name='booknumber' onChange={onhandleChange} />
-                                                {error.booknumber && <span className='text-danger'>{error.booknumber}</span>}
+                                                <label for="exampleFormControlSelect1">Batch</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.batch} onChange={onhandleChange} name='batch'>
+                                                    <option></option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Publication</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.publication} placeholder="Publication" name='publication' onChange={onhandleChange} />
+                                                <label for="exampleFormControlSelect1">Lecture</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.lecture} onChange={onhandleChange} name='lecture'>
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-lg-2">
+                                                <label for="exampleFormControlSelect1">Class Room No.</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.classroom} onChange={onhandleChange} name='classroom'>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group col-lg-2">
+                                                <label for="exampleInputUsername1">Lecture Date</label>
+                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.lecturedate} name='lecturedate' onChange={onhandleChange} />
                                                
                                             </div>
+
                                             <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Page</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.page} placeholder="Page" name='page' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Status </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.status} onChange={onhandleChange} name='status'>
-                                                    <option></option>
-                                                    <option value="1">Current</option>
-                                                    <option value="2">Non-Current</option>
-                                                   
+                                                <label for="exampleFormControlSelect1">Faculty</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.faculty} onChange={onhandleChange} name='faculty'>
+                                                    <option>Select</option>
+                                                    <option>A. G. Belwalkar</option>
+                                                    <option>Aadhar Classes</option>
+                                                    <option>Aashay Dedhia</option>
+                                                    <option>Abhay Gaikar</option>
+                                                    <option>Abhijit A Kulkarni.</option>
+                                                    <option>Abhijit Tapare</option>
+                                                    <option>Abhilash Srinivasan</option>
+                                                    <option>Abhishek Pednekar</option>
+                                                    <option>Abhishek Rakesh Gupta</option>
+                                                    <option>Abhishek Vyas</option>
+                                                    <option>ABIDHUSAIN RIZVI</option>
+                                                    <option>Abrar</option>
+                                                    <option>Aditi Surana.</option>
                                                 </select>
                                             </div>
 
+                                            <div class="form-group col-lg-2">
+                                                <label for="exampleInputUsername1">Assignment/Test Start Date:	</label>
+                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.assignment} name='assignment' onChange={onhandleChange} />
+                                               
+                                            </div>
 
                                             <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Course Name </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.coursename} onChange={onhandleChange} name='coursename'>
-                                                    <option></option>
-                                                    <option value="1">Training in Process Plant System Modelling Using E3D</option>
-                                                    <option value="2">Advance Pipe Stress Analysis</option>
-                                                    <option value="3">Air Conditioning System Design (HVAC)</option>
-                                                    <option value="4">Autocad - Piping</option>
-                                                    <option value="5">Civil/Structural Design & Drafting</option>
-                                                    <option value="6">Electrical & Instrumentation Design and Drafting</option>
-                                                    <option value="7">Electrical System Design</option>
-                                                    <option value="8">Health, Safety & Environment in Construction</option>
-                                                    <option value="9">Mechanical Design of Process Equipment</option>
-                                                    <option value="10">Others</option>
+                                                <label for="exampleFormControlSelect1">Material</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.material} onChange={onhandleChange} name='material'>
+                                                    <option>Select</option>
+                                                    <option>Document</option>
+                                                    <option>LCD</option>
+                                                    <option>None</option>
+                                                    <option>Xerox</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Author</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.author} placeholder="Author" name='author' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Purchase Date</label>
-                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.purchasedate} placeholder="Purchase Date" name='purchasedate' onChange={onhandleChange} />
-                                                
-                                            </div>
 
                                             <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Price</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.price} placeholder="Price" name='price' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                           
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Rack No.</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.rackno} placeholder="Rack No." name='rackno' onChange={onhandleChange} />
-                                                <option value=""></option>
+                                                <label for="exampleFormControlSelect1">Material Issued</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.materialissued} onChange={onhandleChange} name='issued'>
+                                                    <option>Select</option>
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
                                             </div>
 
-                                            
                                             <div class="form-group col-lg-4">
-                                                <label for="exampleTextarea1">Comment </label>
-                                                <textarea class="form-control" id="exampleTextarea1" value={value.comment} placeholder="Comment*" name='comment' onChange={onhandleChange}></textarea>
-                                               
+                                                <label for="exampleTextarea1">Topic Discuss</label>
+                                                <textarea class="form-control" id="exampleTextarea1" value={value.topicdiscuss} placeholder="Topik Discuss*" name='topicdiscuss' onChange={onhandleChange}></textarea>
+                                                
                                             </div>
-
-                                            
 
                                         </div>
-                                            
-
 
 
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -385,13 +385,13 @@ const LibraryBook = () => {
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
                                         <div>
-                                            <h4 class="card-title">View Library Book Details</h4>
+                                            <h4 class="card-title">Feedback Details</h4>
                                         </div>
 
                                     </div>
 
                                     <div>
-                                        <DataGrid
+                                    <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
                                             disableColumnFilter
@@ -434,4 +434,4 @@ const LibraryBook = () => {
     )
 }
 
-export default LibraryBook
+export default LectureTaken

@@ -6,59 +6,95 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { DataGrid ,GridToolbar } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { LibraryBooks } from '@mui/icons-material';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
-const BatchCategory = () => {
+const OnlineStudent = () => {
 
     const [brand, setBrand] = useState([])
     const [vendordata, setVendorData] = useState([])
-    const [specification, setSpecification] = useState("")
-    const [specification2, setSpecification2] = useState("")
-    const [specification3, setSpecification3] = useState("")
     const [uid, setUid] = useState([])
     const [cid, setCid] = useState("")
     const [error, setError] = useState({})
     const [confirmationVisibleMap, setConfirmationVisibleMap] = useState({});
+    const [checked, setChecked] = React.useState([true, false]);
 
- 
+    const handleChange1 = (event) => {
+        setChecked([event.target.checked, event.target.checked]);
+    };
+
+    const handleChange2 = (event) => {
+        setChecked([event.target.checked, checked[1]]);
+    };
+
+    const handleChange3 = (event) => {
+        setChecked([checked[0], event.target.checked]);
+    };
+
+    // const children = (
+    //     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+    //       <FormControlLabel
+    //         label="Child 1"
+    //         control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+    //       />
+    //       <FormControlLabel
+    //         label="Child 2"
+    //         control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+    //       />
+    //     </Box>
+    //   );
 
     const [value, setValue] = useState({
-        batch: "" || uid.batch,
-        batchtype: "" || uid.batchtype,
-        prefix: "" || uid.prefix,
-        description: "" || uid.description
+        training: "" || uid.training,
+        attendee: "" || uid.attendee,
+        instructor: "" || uid.instructor,
+        description: "" || uid.description,
+        feedback: "" || uid.feedback,
+
+
+
 
     })
 
     useEffect(() => {
         setValue({
-            batch: uid.batch,
-            batchtype: uid.batchtype,
-            prefix: uid.prefix,
-            description: uid.description
+            training: uid.training,
+            attendee: uid.attendee,
+            instructor: uid.instructor,
+            description: uid.description,
+            feedback: uid.feedback,
+
         })
     }, [uid])
 
 
-    const validateForm = () => {
-        let isValid = true
-        const newErrors = {}
+    // const validateForm = () => {
+    //     let isValid = true
+    //     const newErrors = {}
 
 
-        if (!value.course) {
-            isValid = false;
-            newErrors.name = "Name is require"
-        }
+    //    if (!value.college) {
+    //     isValid = false;
+    //     newErrors.name = "Name is require"
+    //    }
+    //     if (!value.email) {
+    //         isValid = false;
+    //         newErrors.email = "Email is require"
+    //     }
+    //     setError(newErrors)
+    //     return isValid
+    // }
 
-        setError(newErrors)
-        return isValid
-    }
 
-
-    async function getBatchData() {
+    async function getEmployeeData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -72,9 +108,9 @@ const BatchCategory = () => {
 
 
 
-    async function getBatchData() {
+    async function getEmployeeData() {
         const data = {
-            tablename: "awt_batch_category"
+            tablename: "awt_employeerecord"
         }
         axios.post(`${BASE_URL}/get_data`, data)
             .then((res) => {
@@ -87,7 +123,7 @@ const BatchCategory = () => {
     }
 
     useEffect(() => {
-        getBatchData()
+        getEmployeeData()
         value.title = ""
         setError({})
         setUid([])
@@ -112,7 +148,7 @@ const BatchCategory = () => {
     const handleUpdate = (id) => {
         const data = {
             u_id: id,
-            tablename: "awt_batch_category"
+            tablename: "awt_employeerecord"
         }
         axios.post(`${BASE_URL}/update_data`, data)
             .then((res) => {
@@ -128,12 +164,12 @@ const BatchCategory = () => {
     const handleDelete = (id) => {
         const data = {
             cat_id: id,
-            tablename: "awt_batch_category"
+            tablename: "awt_employeerecord"
         }
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getBatchData()
+                getEmployeeData()
 
             })
             .catch((err) => {
@@ -149,25 +185,27 @@ const BatchCategory = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // if (validateForm()) {
-            const data = {
-                batch: value.batch,
-                batchtype: value.batchtype,
-                prefix: value.prefix,
-                description: value.description,
-                uid : uid.id
-            }
+        // if(validateForm()){
+        const data = {
+
+            training: value.training,
+            attendee: value.attendee,
+            instructor: value.instructor,
+            description: value.description,
+            feedback: value.feedback,
+            uid: uid.id
+        }
 
 
-            axios.post(`${BASE_URL}/batch_category`, data)
-                .then((res) => {
-                    console.log(res)
-                    getBatchData()
+        axios.post(`${BASE_URL}/add_employeerecord`, data)
+            .then((res) => {
+                console.log(res)
+                getEmployeeData()
 
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         // }
 
 
@@ -195,11 +233,12 @@ const BatchCategory = () => {
             headerAlign: 'center',
             flex: 1,
             filterable: false,
+
         },
-        { field: 'batch', headerName: 'Batch Category', flex: 2 },
-        { field: 'batchtype', headerName: 'Batch Type', flex: 2 },
-        { field: 'prefix', headerName: 'Prefix', flex: 2 },
+        { field: 'attendee', headerName: 'Attendee', flex: 2 },
+        { field: 'instructor', headerName: 'Instructor', flex: 2 },
         { field: 'description', headerName: 'Description', flex: 2 },
+        { field: 'feedback', headerName: 'FeedBack', flex: 2 },
 
         {
             field: 'actions',
@@ -230,40 +269,57 @@ const BatchCategory = () => {
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Batch Information</h4>
+                                    <h4 class="card-title">Online Srudent</h4>
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
+
                                             <div class="form-group col-lg-3">
-                                                <label for="exampleInputUsername1">Batch Category<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.batch} placeholder="Batch Category*" name='batch' batchcategory={onhandleChange} />
-                                                {/* {error.batchcategory && <span className='text-danger'>{error.batchcategory}</span>} */}
-                                            </div>
-                                            
-                                            <div class="form-group col-lg-3">
-                                                <label for="exampleFormControlSelect1">Batch Type </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.batchtype} onChange={onhandleChange} name='batchtype'>
-                                                    <option></option>
-                                                    <option value="1">Inhouse</option>
-                                                    <option value="2">Corporate</option>
-                                                    <option value="3">Transfer</option>
+                                                <label for="exampleFormControlSelect1">Select Course<span className='text-danger'>*</span> </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.attendee} onChange={onhandleChange} name='attendee'>
+                                                    <option>Select</option>
+                                                    <option>Civil/Structural Design & Drafting</option>
+                                                    <option>Electrical & Instrumentation Design and Drafting</option>
+                                                    <option>Electrical System Design</option>
+                                                    <option>Health, Safety & Environment in Construction</option>
+                                                    <option>MEP Engineering (Mechanical, Electrical & Plumbing)</option>
                                                 </select>
-                                            </div>
-                                            <div class="form-group col-lg-3">
-                                                <label for="exampleInputUsername1">Prefix</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.prefix} placeholder="Course Code*" name='prefix' onChange={onhandleChange} />
-                                                {/* {error.course_code && <span className='text-danger'>{error.course_code}</span>} */}
                                             </div>
 
                                             <div class="form-group col-lg-3">
-                                                <label for="exampleTextarea1">Description</label>
-                                                <textarea class="form-control" id="exampleTextarea1" name='description' value={value.description} placeholder="Description*" onChange={onhandleChange}></textarea>
-                                                {/* {error.introducation && <div className="text-danger">{error.introducation}</div>} */}
+                                                <label for="exampleFormControlSelect1">Admission Status<span className='text-danger'>*</span> </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.attendee} onChange={onhandleChange} name='attendee'>
+                                                    <option>Select</option>
+                                                    <option>Accepted</option>
+                                                    <option>Denied</option>
+                                                    <option>Pending</option>
+
+                                                </select>
                                             </div>
+                                            <div class="from-group col-lg-3">
+                                                <label for="exampleFormControlSelect1"></label>
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DemoContainer components={['DatePicker']}>
+                                                        <DatePicker label="From Date" />
+                                                    </DemoContainer>
+                                                </LocalizationProvider>
+                                            </div>
+
+                                            <div class="from-group col-lg-3">
+                                                <label for="exampleFormControlSelect1"></label>
+                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                    <DemoContainer components={['DatePicker']}>
+                                                        <DatePicker label="To Date" />
+                                                    </DemoContainer>
+                                                </LocalizationProvider>
+                                            </div>
+
 
 
 
                                         </div>
+
+
 
 
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -280,14 +336,13 @@ const BatchCategory = () => {
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
                                         <div>
-                                            <h4 class="card-title">View Batch Category</h4>
-                                            
+                                            <h4 class="card-title">Employee Training Record</h4>
                                         </div>
 
                                     </div>
 
                                     <div>
-                                    <DataGrid
+                                        <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
                                             disableColumnFilter
@@ -330,4 +385,4 @@ const BatchCategory = () => {
     )
 }
 
-export default BatchCategory
+export default OnlineStudent

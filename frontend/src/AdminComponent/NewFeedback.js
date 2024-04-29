@@ -6,14 +6,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid ,GridToolbar} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { LibraryBooks } from '@mui/icons-material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+//import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
-
-const Feedback = () => {
+const NewFeedback = () => {
 
     const [brand, setBrand] = useState([])
     const [vendordata, setVendorData] = useState([])
@@ -35,48 +39,38 @@ const Feedback = () => {
       setChecked([checked[0], event.target.checked]);
     };
 
-    // const suggestion = (
-    //     <Box sx={{flexDirection: 'column', }}>
+    // const children = (
+    //     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
     //       <FormControlLabel
-    //         label="Suggestion Required"
+    //         label="Child 1"
     //         control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
     //       />
     //       <FormControlLabel
-    //         label="Brief answer required"
+    //         label="Child 2"
     //         control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
     //       />
     //     </Box>
     //   );
 
-        const [selectedOption, setSelectedOption] = useState('');
-      
-        //Function to handle radio button change
-        const handleOptionChange = (event) => {
-          setSelectedOption(event.target.value);
-        };
-
-
-
-
     const [value, setValue] = useState({
-        questionfor : ""|| uid.questionfor,
-        category : ""|| uid.category,
-        question : ""|| uid.question,
-        selection : ""|| uid.selection,
-        order : ""|| uid.order
+        training : ""|| uid.training,
+        attendee : ""|| uid.attendee,
+        instructor : ""|| uid.instructor,
+        description : ""|| uid.description,
+        feedback : ""|| uid.feedback,
+
+        
 
 
     })
 
     useEffect(() => {
         setValue({
-
-        questionfor : uid.questionfor,
-        category : uid.category,
-        question : uid.question,
-        selection : uid.selection,
-        order :uid.order
-   
+            training : uid.training,
+            attendee : uid.attendee,
+            instructor : uid.instructor,
+            description :uid.description,
+            feedback: uid.feedback,
 
         })
     }, [uid])
@@ -100,7 +94,7 @@ const Feedback = () => {
     // }
 
 
-    async function getFeedData() {
+    async function getEmployeeData() {
 
         axios.post(`${BASE_URL}/vendor_details`)
             .then((res) => {
@@ -114,9 +108,9 @@ const Feedback = () => {
 
 
     
-    async function getFeedData() {
+    async function getEmployeeData() {
         const data = {
-            tablename : "awt_feedback"
+            tablename : "awt_employeerecord"
         }
         axios.post(`${BASE_URL}/get_data`,data)
             .then((res) => {
@@ -129,7 +123,7 @@ const Feedback = () => {
     }
 
     useEffect(() => {
-        getFeedData()
+        getEmployeeData()
         value.title = ""
         setError({})
         setUid([])
@@ -154,7 +148,7 @@ const Feedback = () => {
     const handleUpdate = (id) => {
         const data = {
             u_id : id,
-            tablename : "awt_feedback"
+            tablename : "awt_employeerecord"
         }
         axios.post(`${BASE_URL}/update_data`, data)
             .then((res) => {
@@ -170,12 +164,12 @@ const Feedback = () => {
     const handleDelete = (id) => {
         const data = {
             cat_id: id,
-            tablename : "awt_feedback"
+            tablename : "awt_employeerecord"
         }
 
         axios.post(`${BASE_URL}/delete_data`, data)
             .then((res) => {
-                getFeedData()
+                getEmployeeData()
 
             })
             .catch((err) => {
@@ -194,19 +188,19 @@ const Feedback = () => {
     // if(validateForm()){
         const data = {
             
-        questionfor : value.questionfor,
-        category : value.category,
-        question : value.question,
-        selection : value.selection,
-        order :value.order,
+        training : value.training,
+        attendee : value.attendee,
+        instructor : value.instructor,
+        description :value.description,
+        feedback: value.feedback,
         uid : uid.id
         }
 
 
-        axios.post(`${BASE_URL}/add_feedback`, data)
+        axios.post(`${BASE_URL}/add_employeerecord`, data)
             .then((res) => {
                console.log(res)
-               getFeedData()
+               getEmployeeData()
 
             })
             .catch((err) => {
@@ -239,10 +233,12 @@ const Feedback = () => {
             headerAlign: 'center',
             flex: 1,
             filterable: false,
+                                              
         },
-        { field: 'questionfor', headerName: 'Question For', flex: 2 },
-        { field: 'question', headerName: 'Question', flex: 2 },
-        { field: 'order', headerName: 'Question Order', flex: 2},
+        { field: 'attendee', headerName: 'Attendee', flex: 2},
+        { field: 'instructor', headerName: 'Instructor', flex: 2},
+        { field: 'description', headerName: 'Description', flex: 2},
+        { field: 'feedback', headerName: 'FeedBack', flex: 2},
         
         {
             field: 'actions',
@@ -273,91 +269,91 @@ const Feedback = () => {
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Feedback Questions</h4>
+                                    <h4 class="card-title">Student Search Feedback Analysis Report III</h4>
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Question For </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.questionfor} onChange={onhandleChange} name='questionfor'>
-                                                    <option>Question For</option>
-                                                    <option>Training in Process Plant System Modelling Using E3D</option>
-                                                    <option>Advance Pipe Stress Analysis</option>
-                                                    <option>Air Conditioning System Design (HVAC)</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Category </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.category} onChange={onhandleChange} name='category'>
-                                                    <option>Category</option>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                </select>
-                                            </div>
+
                                             
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Selection Type</label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.selection} onChange={onhandleChange} name='selection'>
-                                                    <option>Select</option>
-                                                    <option>FreeTextBox</option>
-                                                    <option>Numeric</option>
-                                                    <option>Multiple Selection</option>
-                                                    <option>Yes /No /May Be</option>
+                                            <div class="form-group col-lg-4">
+                                                <label for="exampleFormControlSelect1">Course<span className='text-danger'>*</span> </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.department} onChange={onhandleChange} name='department'>
+                                                    <option>Select Course</option>
+                                                    <option> Training in Process Plant System Modelling Using E3D</option>
+                                                    <option>Advance Pipe Stress Analysis </option>
+                                                    <option>Air Conditioning System Design (HVAC)</option>
+                                                    <option>Autocad - Piping</option>
+                                                    <option>Civil/Structural Design &amp; Drafting </option>
+                                                    <option>Electrical &amp; Instrumentation Design and Drafting </option>
+                                                    <option>Electrical System Design</option>
+                                                    <option>Engineering Design &amp; Drafting </option>
+                                                    <option>Fire Alarm and Protection System </option>
+                                                    <option>Fundamentals of Offshore</option>
+                                                    <option>Health, Safety &amp; Environment in Construction</option>
+                                                    <option>HVAC Design and Drafting</option>
+                                                    <option>Masonry/Carpentry</option>
+                                                    <option>Mechanical Design of Process Equipment</option>
+                                                    <option>MEP Engineering (Mechanical, Electrical &amp; Plumbing)</option>
+                                                    <option>Offshore Engineering</option>
+                                                    <option>Others</option>
+                                                    <option>Pipeline Engineering</option>
+                                                    <option>Piping Design &amp; Drafting </option>
+                                                    <option>Piping Engineering </option>
+                                                    <option>Piping Materials</option>
+                                                    <option>Plant Design Management System (PDMS)</option>
+                                                    <option>PLANT LAYOUT DESIGN</option>
+                                                    <option>Priventive </option>
+                                                    <option>Process Engineering</option>
+                                                    <option>Process Equipment Fabrication Engineering</option>
+                                                    <option>Process Instrumentation &amp; Control</option>
+                                                    <option>PV Elite </option>
+                                                    <option>Rotating Equipment</option>
+                                                    <option>Smart Plant P&amp;ID</option>
+                                                    <option>Solar PV Power System with renewable Energy  </option>
+                                                    <option>Structural Engineering </option>
+                                                    <option>The Art of Developing a Balanced Personality</option>
+                                                    <option>Water &amp; Waste Water Engg.</option>
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Order</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.order} placeholder="Order" name='order' onChange={onhandleChange} />
-                                               
+                                            
+                                            <div class="form-group col-lg-4">
+                                                <label for="exampleFormControlSelect1">Batck<span className='text-danger'>*</span> </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.batch} onChange={onhandleChange} name='batch'>
+                                                    <option></option>
+                                                </select>
                                             </div>
-
 
                                             <div class="form-group col-lg-4">
-                                                <label for="exampleInputUsername1">Question</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.question} placeholder="Question" name='question' onChange={onhandleChange} />
-                                               
+                                                <label for="exampleInputUsername1">FeedBack<span className='text-danger'>*</span></label>
+                                                <select class="form-control form-control-lg" id="examplaFromControlSelect1" value={value.feedback} onChange={onhandleChange} name='feedback'>
+                                                    <option></option>
+                                                </select>                                                
                                             </div>
 
-                                            
-
                                         </div>
-                                        <div>
-                                            <div>
-                                                <label>
-                                                    <input
-                                                    name='suggestion'
-                                                    type="radio"
-                                                    value="Suggestion Required"
-                                                    checked={selectedOption === "Suggestion Required"}
-                                                    onChange={handleOptionChange}
-                                                    />
-                                                    Suggestion Required
-                                                </label>
 
-                                                <label className='mx-5'>
-                                                    <input
-                                                    name='brief'
-                                                    type="radio"
-                                                    value="Brief answer required"
-                                                    checked={selectedOption === "Brief answer required"}
-                                                    onChange={handleOptionChange}
-                                                    />
-                                                    Brief answer required
-                                                </label>
-
-
-                                                <div>Selected option: {selectedOption}</div>
+                                        <div class="from-group col-lg-12">
+                                                <FormControl>
+                                                    <RadioGroup
+                                                        row
+                                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                                        name="row-radio-buttons-group" >
+                                                        <FormControlLabel value="studentwise" control={<Radio />} label="Student Wise" />
+                                                        <FormControlLabel value="facultywise" control={<Radio />} label="Faculty Wise" />
+                                                        
+                                                      
+                                                    </RadioGroup>
+                                                </FormControl>
+                                                
                                             </div>
-                                        </div>
-                                            
 
 
-
-                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                        
+                                        {/* <button type="submit" class="btn btn-primary mr-2">Show Final Result</button> */}
                                         <button type='button' onClick={() => {
                                             window.location.reload()
-                                        }} class="btn btn-light">Cancel</button>
+                                        }} class="btn btn-primary mr-2  ">Show Feedback New Report</button>
                                     </form>
 
                                 </div>
@@ -368,29 +364,19 @@ const Feedback = () => {
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
                                         <div>
-                                            <h4 class="card-title">Feedback Details</h4>
+                                            <h4 class="card-title"></h4>
                                         </div>
 
                                     </div>
 
                                     <div>
-                                    <DataGrid
+                                        <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
-                                            disableColumnFilter
-                                            disableColumnSelector
-                                            disableDensitySelector
-                                            rowHeight={35}
                                             getRowId={(row) => row.id}
                                             initialState={{
                                                 pagination: {
                                                     paginationModel: { pageSize: 10, page: 0 },
-                                                },
-                                            }}
-                                            slots={{ toolbar: GridToolbar }}
-                                            slotProps={{
-                                                toolbar: {
-                                                    showQuickFilter: true,
                                                 },
                                             }}
                                         />
@@ -417,4 +403,4 @@ const Feedback = () => {
     )
 }
 
-export default Feedback
+export default NewFeedback

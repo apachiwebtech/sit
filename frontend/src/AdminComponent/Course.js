@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid ,GridToolbar } from '@mui/x-data-grid';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -242,28 +242,28 @@ const Course = () => {
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-3">
                                                 <label for="exampleInputUsername1">Course Name<span className='text-danger'>*</span></label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.course} placeholder="Course Name*" name='course' onChange={onhandleChange} />
                                                 {error.course && <span className='text-danger'>{error.course}</span>}
                                             </div>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-3">
                                                 <label for="exampleInputUsername1">Course Code</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.course_code} placeholder="Course Code*" name='course_code' onChange={onhandleChange} />
                                                 {error.course_code && <span className='text-danger'>{error.course_code}</span>}
                                             </div>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-3">
                                                 <label for="exampleTextarea1">Eligibility</label>
                                                 <textarea class="form-control" id="exampleTextarea1" name='eligibility' value={value.eligibility} placeholder="Eligibility*" onChange={onhandleChange}></textarea>
                                                 {error.eligibility && <div className="text-danger">{error.eligibility}</div>}
                                             </div>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-3">
                                                 <label for="exampleInputUsername1">Introduction</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.introducation} placeholder="Introduction" name='introduction' onChange={onhandleChange} />
                                                 
                                             </div>
 
-                                            <div class="form-group col-lg-12">
+                                            <div class="form-group col-lg-6">
                                                 <label for="exampleTextarea1">Key Points of Syllabus:</label>
                                                 <CKEditor
                                                     editor={ClassicEditor}
@@ -285,7 +285,7 @@ const Course = () => {
                                                 />
                                             </div>
 
-                                            <div class="form-group col-lg-12">
+                                            <div class="form-group col-lg-6">
                                             <label for="exampleTextarea1">Objective:</label>
                                                  <CKEditor
                                                     editor={ClassicEditor}
@@ -308,7 +308,7 @@ const Course = () => {
                                             </div>
                                             
 
-                                            <div class="form-group col-lg-12">
+                                            <div class="form-group col-lg-6">
                                             <label for="exampleTextarea1">Basic Study Preparation required:</label>
                                                  <CKEditor
                                                     editor={ClassicEditor}
@@ -344,7 +344,7 @@ const Course = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-11">
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
@@ -359,10 +359,20 @@ const Course = () => {
                                         <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
+                                            disableColumnFilter
+                                            disableColumnSelector
+                                            disableDensitySelector
+                                            rowHeight={35}
                                             getRowId={(row) => row.id}
                                             initialState={{
                                                 pagination: {
                                                     paginationModel: { pageSize: 10, page: 0 },
+                                                },
+                                            }}
+                                            slots={{ toolbar: GridToolbar }}
+                                            slotProps={{
+                                                toolbar: {
+                                                    showQuickFilter: true,
                                                 },
                                             }}
                                         />

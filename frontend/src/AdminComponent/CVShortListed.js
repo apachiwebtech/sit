@@ -12,7 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const College = () => {
+const CVShortListed = () => {
 
     const [brand, setBrand] = useState([])
     const [vendordata, setVendorData] = useState([])
@@ -297,98 +297,77 @@ const College = () => {
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">College Information</h4>
+                                    <h4 class="card-title">CV Shortlisted Details</h4>
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">College Name<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.college_name} placeholder="College Name*" name='college_name' onChange={onhandleChange} />
-                                                {error.college_name && <span className='text-danger'>{error.college_name}</span>}
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">University<span className='text-danger'>*</span></label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.university} placeholder="University*" name='university' onChange={onhandleChange} />
-                                                {error.university && <span className='text-danger'>{error.university}</span>}
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Contact Person</label>
-                                                <input type="contact_person" class="form-control" id="exampleInputUsername1" value={value.contact_person} placeholder="Contact Person" name='contact_person' onChange={onhandleChange} />
-                                               
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Designation</label>
-                                                <input type="text" class="form-control" id="exampleInputUsername1" value={value.designation} placeholder="Designation" name='designation' onChange={onhandleChange} />
-                                                
-                                            </div>
                                             
-                                            <div class="form-group col-lg-4">
-                                                <label for="exampleTextarea1">Address </label>
-                                                <textarea class="form-control" id="exampleTextarea1" value={value.address} placeholder="Address*" name='address' onChange={onhandleChange}></textarea>
-                                                {error.address && <div className="text-danger">{error.address}</div>}
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">City</label>
-                                                <input type="city" class="form-control" id="exampleInputUsername1" value={value.city} placeholder="City" name='city' onChange={onhandleChange} />
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleInputUsername1">Date</label>
+                                                <input type="date" class="form-control" id="exampleInputUsername1" value={value.date} placeholder="Purpose" name='date' onChange={onhandleChange} />
                                                 
                                             </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Pin</label>
-                                                <input type="pin" class="form-control" id="exampleInputUsername1" value={value.pin} placeholder="Pin" name='pin' onChange={onhandleChange} />
-                                                
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleFormControlSelect1">Company Name </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.company} onChange={onhandleChange} name='company'>
+                                                        <option> Allied System &amp; Integrators Private Limited</option>
+                                                        <option> Amocon Refrigeration &amp; Engineering Co.</option>
+                                                        <option> Anand Systems Engineering Pvt. Ltd.</option>
+                                                        <option> Avenir International Engineers &amp; Consultants LLC, Abu Dhabi</option>
+                                                        <option> Bertrams India Pvt. Ltd.- (Formerly-Chemical &amp; Environmental Technologies- Thane)              </option>
+                                                        <option> Chloro Controls Equipment Co - Same as Capital Controls</option>
+                                                        <option> Chromline Equipment India Pvt Ltd</option>
+                                                        <option> Constellation Total Solution Private Limited</option>
+                                                        <option> Contento Engineering Pvt. Ltd</option>
+                                                        <option> CRISTAL INSTRUMENTS</option>
+                                                        <option> Echelon CAE Services Pvt. Ltd.</option>
+                                                        <option> Entech consultancy bureau (madras) pvt. ltd. </option>
+                                                        <option> Enventure Technology Services</option>
+                                                        <option> ENVIRO ANALYSTS &amp; ENGINEERS PVT. LTD</option>
+                                                        <option> Expert Global Solutions Pvt. Ltd.-Hyderabad</option>
+                                                        <option> Gemsons Precision Engineering (P) Ltd.- Don&#39;t contact this company</option>
+                                                        <option> Hitech Instrumentation (India) Pvt Ltd </option>
+                                                        <option> Indrox Global Pvt. Ltd.</option>
+                                                        <option> Indus Engineers Pvt Ltd</option>
+                                                </select>
                                             </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">State</label>
-                                                <input type="state" class="form-control" id="exampleInputUsername1" value={value.state} placeholder="State" name='state' onChange={onhandleChange} />
-                                                
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleFormControlSelect1">Course Name</label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.coursename} onChange={onhandleChange} name='coursename'>
+                                                        <option> Allied System &amp; Integrators Private Limited</option>
+                                                        <option> Amocon Refrigeration &amp; Engineering Co.</option>
+                                                        <option> Anand Systems Engineering Pvt. Ltd.</option>
+                                                        <option> Avenir International Engineers &amp; Consultants LLC, Abu Dhabi</option>
+                                                        <option> Bertrams India Pvt. Ltd.- (Formerly-Chemical &amp; Environmental Technologies- Thane)              </option>
+                                                        <option> Chloro Controls Equipment Co - Same as Capital Controls</option>
+                                                        <option> Chromline Equipment India Pvt Ltd</option>
+                                                        <option> Constellation Total Solution Private Limited</option>
+                                                        <option> Contento Engineering Pvt. Ltd</option>
+                                                        <option> CRISTAL INSTRUMENTS</option>
+                                                        <option> Echelon CAE Services Pvt. Ltd.</option>
+                                                        <option> Entech consultancy bureau (madras) pvt. ltd. </option>
+                                                        <option> Enventure Technology Services</option>
+                                                        <option> ENVIRO ANALYSTS &amp; ENGINEERS PVT. LTD</option>
+                                                        <option> Expert Global Solutions Pvt. Ltd.-Hyderabad</option>
+                                                        <option> Gemsons Precision Engineering (P) Ltd.- Don&#39;t contact this company</option>
+                                                        <option> Hitech Instrumentation (India) Pvt Ltd </option>
+                                                        <option> Indrox Global Pvt. Ltd.</option>
+                                                        <option> Indus Engineers Pvt Ltd</option>
+                                                </select>
                                             </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Country</label>
-                                                <input type="country" class="form-control" id="exampleInputUsername1" value={value.country} placeholder="Country" name='country' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Telephone</label>
-                                                <input type="telephone" class="form-control" id="exampleInputUsername1" value={value.telephone} placeholder="Telephone" name='telephone' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Mobile</label>
-                                                <input type="mobile" class="form-control" id="exampleInputUsername1" value={value.mobile} placeholder="Mobile" name='mobile' onChange={onhandleChange} />
-                                                
-                                            </div>
-
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">E-Mail</label>
-                                                <input type="email" class="form-control" id="exampleInputUsername1" value={value.email} placeholder="E-Mail" name='email' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                           
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Website</label>
-                                                <input type="website" class="form-control" id="exampleInputUsername1" value={value.website} placeholder="Website" name='website' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Remark</label>
-                                                <input type="remark" class="form-control" id="exampleInputUsername1" value={value.remark} placeholder="Remark" name='remark' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleInputUsername1">Purpose</label>
-                                                <input type="purpose" class="form-control" id="exampleInputUsername1" value={value.purpose} placeholder="Purpose" name='purpose' onChange={onhandleChange} />
-                                                
-                                            </div>
-                                            <div class="form-group col-lg-2">
-                                                <label for="exampleFormControlSelect1">Course </label>
-                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.course} onChange={onhandleChange} name='course'>
-                                                    <option>Select Course</option>
-                                                    <option value="1">Instrumentation & Control</option>
-                                                    <option value="2">Piping Engineering</option>
-                                                    <option value="3">Mechanical Design</option>
-                                                    <option value="4">Electrical Engineering,</option>
-                                                    <option value="6">Water & Waste Water Engg.</option>
+                                            <div class="form-group col-lg-3">
+                                                <label for="exampleFormControlSelect1">Batch Code </label>
+                                                <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.batchcode} onChange={onhandleChange} name='batchcode'>
+                                                        <option>01254</option>
+                                                        <option>95475</option>
+                                                        <option>01212</option>
+                                                        <option>04245</option>
+                                                        <option>02548</option>
+                                                        <option>03568</option>
+                                                        <option>09865</option>
+                                                        <option>03214</option>
+                                                        <option>03521</option>
+                                                       
                                                 </select>
                                             </div>
 
@@ -481,4 +460,4 @@ const College = () => {
     )
 }
 
-export default College
+export default CVShortListed

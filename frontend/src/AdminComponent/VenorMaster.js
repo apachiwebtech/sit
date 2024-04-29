@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InnerHeader from './InnerHeader';
 import decryptedUserId from '../Utils/UserID';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid ,GridToolbar } from '@mui/x-data-grid';
 
 
 const VendorMaster = () => {
@@ -266,24 +266,24 @@ const VendorMaster = () => {
                                     <hr></hr>
                                     <form class="forms-sample py-3" onSubmit={handleSubmit}>
                                         <div class='row'>
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Vendor Name <span className='text-danger'>*</span></label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.vendorname} placeholder="Vindor Name*" name='vendorname' onChange={onhandleChange} />
                                                 {error.name && <span className='text-danger'>{error.name}</span>}
                                             </div>
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">E- Mail <span className='text-danger'>*</span></label>
                                                 <input type="email" class="form-control" id="exampleInputUsername1" value={value.email} placeholder="Email Id" name='email' onChange={onhandleChange} />
                                                 {error.email && <span className='text-danger'>{error.email}</span>}
 
                                             </div>
 
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Telephone</label>
                                                 <input type="telephone" class="form-control" id="exampleInputUsername1" value={value.telephone} placeholder="Telephone" name='telephone' onChange={onhandleChange} />
                                             </div>
 
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleFormControlSelect1">Type <span className='text-danger'>*</span></label>
                                                 <select class="form-control form-control-lg" id="exampleFormControlSelect1" value={value.type} onChange={onhandleChange} name='type'>
                                                     <option value="1">Award & Medals</option>
@@ -294,11 +294,8 @@ const VendorMaster = () => {
                                                 </select>
                                                 {error.type && <div className="text-danger">{error.type}</div>}
                                             </div>
-                                        </div>
-                                        <div class='row'>
 
-
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-4">
                                                 <label for="exampleTextarea1">Address <span className='text-danger'>*</span></label>
                                                 <textarea class="form-control" id="exampleTextarea1" name='address' value={value.address} placeholder="Address*" onChange={onhandleChange}></textarea>
                                                 {error.address && <div className="text-danger">{error.address}</div>}
@@ -307,58 +304,57 @@ const VendorMaster = () => {
                                         </div>
                                         <div class="row">
 
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Country</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.country} placeholder="Enter Country" name='country' onChange={onhandleChange} />
                                                 
                                             </div>
 
 
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">State</label>
                                                 <input type="state" class="form-control" id="exampleInputUsername1" value={value.state} placeholder="State" name='state' onChange={onhandleChange} />
                                                 
                                             </div>
 
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">City</label>
                                                 <input type="city" class="form-control" id="exampleInputUsername1" value={value.city} placeholder="City" name='city' onChange={onhandleChange} />
                                                 
                                             </div>
 
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Pin</label>
                                                 <input type="pin" class="form-control" id="exampleInputUsername1" value={value.pin} placeholder="Enter Pin" name='pin' onChange={onhandleChange} />
                                                 
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-3">
+
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Contact Person</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.contactperson} placeholder="Contact Person" name='text' onChange={onhandleChange} />
                                                
                                             </div>
-                                            <div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Mobile</label>
                                                 <input type="mobile" class="form-control" id="exampleInputUsername1" value={value.mobile} placeholder="Number" name='mobile' onChange={onhandleChange} />
                                                
                                             </div>
-                                            <div class="form-group col-lg-3 ">
+
+                                        </div>
+                                        <div class="row">
+                                            
+                                            <div class="form-group col-lg-2">
                                                 <label for="exampleInputUsername1">Fax</label>
                                                 <input type="text" class="form-control" id="exampleInputUsername1" value={value.fax} placeholder="Fax" name='fax' onChange={onhandleChange} />
                                                 
                                             </div>
-                                        </div>
-                                        <div class="row">
 
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-4">
                                                 <label for="exampleTextarea1">Comments</label>
                                                 <textarea class="form-control" id="exampleTextarea1" name='comments' value={value.comments} placeholder="Comments" onChange={onhandleChange}></textarea>
                                                 
                                             </div>
-
                                         </div>
-
 
 
 
@@ -373,7 +369,7 @@ const VendorMaster = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-11">
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div className='d-flex justify-content-between'>
@@ -387,13 +383,23 @@ const VendorMaster = () => {
                                     </div>
 
                                     <div>
-                                        <DataGrid
+                                    <DataGrid
                                             rows={rowsWithIds}
                                             columns={columns}
+                                            disableColumnFilter
+                                            disableColumnSelector
+                                            disableDensitySelector
+                                            rowHeight={35}
                                             getRowId={(row) => row.id}
                                             initialState={{
                                                 pagination: {
                                                     paginationModel: { pageSize: 10, page: 0 },
+                                                },
+                                            }}
+                                            slots={{ toolbar: GridToolbar }}
+                                            slotProps={{
+                                                toolbar: {
+                                                    showQuickFilter: true,
                                                 },
                                             }}
                                         />
